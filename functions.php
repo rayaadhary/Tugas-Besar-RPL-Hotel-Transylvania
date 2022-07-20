@@ -5,6 +5,25 @@ function dbConnect(){
 	return $db;
 }
 // getListKategori digunakan untuk mengambil seluruh data dari tabel produk
+function getListPemesanan(){
+	$db=dbConnect();
+	if($db->connect_errno==0){
+		$res=$db->query("SELECT * tmemesan
+						 FROM 
+						 ORDER BY no_pemesanan");
+		if($res){
+			$data=$res->fetch_all(MYSQLI_ASSOC);
+			$res->free();
+			return $data;
+		}
+		else
+			return FALSE; 
+	}
+	else
+		return FALSE;
+}
+
+// getListKategori digunakan untuk mengambil seluruh data dari tabel produk
 function getListJenis(){
 	$db=dbConnect();
 	if($db->connect_errno==0){
@@ -60,6 +79,59 @@ function getListPembeli(){
 		return FALSE;
 }
 
+function getListPetugas(){
+	$db=dbConnect();
+	if($db->connect_errno==0){
+		$res=$db->query("SELECT * 
+						 FROM tpetugas
+						 ORDER BY nama_petugas");
+		if($res){
+			$data=$res->fetch_all(MYSQLI_ASSOC);
+			$res->free();
+			return $data;
+		}
+		else
+			return FALSE; 
+	}
+	else
+		return FALSE;
+}
+
+function getListPelanggan(){
+	$db=dbConnect();
+	if($db->connect_errno==0){
+		$res=$db->query("SELECT * 
+						 FROM tpelanggan
+						 ORDER BY nama_pelanggan");
+		if($res){
+			$data=$res->fetch_all(MYSQLI_ASSOC);
+			$res->free();
+			return $data;
+		}
+		else
+			return FALSE; 
+	}
+	else
+		return FALSE;
+}
+
+function getListKamar(){
+	$db=dbConnect();
+	if($db->connect_errno==0){
+		$res=$db->query("SELECT * 
+						 FROM tkamar
+						 ORDER BY jenis_kamar");
+		if($res){
+			$data=$res->fetch_all(MYSQLI_ASSOC);
+			$res->free();
+			return $data;
+		}
+		else
+			return FALSE; 
+	}
+	else
+		return FALSE;
+}
 
 // digunakan untuk mengambil data sebuah barang
 function getDataBarang($id_barang){

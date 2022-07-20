@@ -1,4 +1,4 @@
-<?php include_once("functions.php") ?>
+<?php include_once("../functions.php") ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,13 +9,14 @@
         <title>Tambah Kamar | Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
         <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
+        <script src="../js/scripts.js"></script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -40,7 +41,10 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
+                    <h6 class="mt-4 mb-3">
+                        <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
+                    </h6>
+                    <h4 class="text-center">Edit Kamar</h4>
                     <div class="row">
                       <div class="col-6 ps-4">
                         <form>
@@ -65,7 +69,7 @@
                     <input type="text" class="form-control" id="Harga" placeholder="Harga">
                     </div>
                     <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mr-3">Tambah</button>
+                    <button type="submit" class="btn btn-primary mr-3">Simpan</button>
                     </div>
                     </form>
                       </div>  

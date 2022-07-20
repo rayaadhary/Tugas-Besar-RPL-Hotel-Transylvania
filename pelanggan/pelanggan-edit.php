@@ -1,4 +1,4 @@
-<?php include_once("functions.php") ?>
+<?php include_once("../functions.php") ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Hotel Transylvania</title>
+        <title>Edit Pelanggan | Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
@@ -19,17 +19,8 @@
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">(Logo hotel)</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Pelanggan</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Kamar</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Pemesanan</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Petugas</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="pembayaran-view.php">Pembayaran</a>
-                </div>
-            </div>
+            <?php include_once("../sidebar-petugas.php"); ?>
+
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
@@ -43,21 +34,21 @@
                     <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
                     <div class="row">
                       <div class="col-6 ps-4">
-                        <form>
+                        <form >
                     <div class="form-group mb-3">
-                    <label for="IdPetugas">Id Petugas</label>
-                    <input type="text" class="form-control" id="IdPetugas" placeholder="Id Petugas">
+                    <label for="formGroupExampleInput">NIK</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="NIK">
                     </div>
                     <div class="form-group mb-3">
-                    <label for="NamaPetugas">Nama Petugas</label>
-                    <input type="text" class="form-control" id="NamaPetugas" placeholder="Nama Lengkap">
+                    <label for="formGroupExampleInput2">Nama Pelanggan</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Nama">
                     </div>
                     <div class="form-group mb-3">
-                    <label for="Jabatan">Jabatan</label>
-                    <input type="text" class="form-control" id="Jabatan" placeholder="Jabatan">
+                    <label for="formGroupExampleInput2">No Telepon</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="No Telepon">
                     </div>
                     <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mr-3">Tambah</button>
+                    <button type="submit" class="btn btn-primary mr-3" name=">Tambah</button>
                     </div>
                     </form>
                       </div>  
