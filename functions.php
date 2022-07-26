@@ -1,16 +1,21 @@
 <?php
 define("DEVELOPMENT",TRUE);
 function dbConnect(){
-	$db=new mysqli("localhost","root","","db_hotel_transylvania");// Sesuaikan dengan konfigurasi server anda.
+	$db=new mysqli("localhost","root","","db_hotel_transylvaniaa");// Sesuaikan dengan konfigurasi server anda.
 	return $db;
 }
 // getListKategori digunakan untuk mengambil seluruh data dari tabel produk
+function session() {
+	session_start();
+}
+
 function getListPemesanan(){
 	$db=dbConnect();
 	if($db->connect_errno==0){
 		$res=$db->query("SELECT * tmemesan
 						 FROM 
-						 ORDER BY no_pemesanan");
+						 ORDER BY no_pemesanan
+						");
 		if($res){
 			$data=$res->fetch_all(MYSQLI_ASSOC);
 			$res->free();
@@ -22,6 +27,7 @@ function getListPemesanan(){
 	else
 		return FALSE;
 }
+
 
 // getListKategori digunakan untuk mengambil seluruh data dari tabel produk
 function getListJenis(){
@@ -201,28 +207,6 @@ function getDataTransaksi($id_transaksi){
 		return FALSE;
 }
 
-// digunakan untuk mengambil data pembeli
-function getDataPembeli($id_pembeli){
-	$db=dbConnect();
-	if($db->connect_errno==0){
-		$res=$db->query("SELECT id_pembeli, nama_pembeli, telepon, alamat
-						FROM pembeli
-						WHERE id_pembeli='$id_pembeli'");
-		if($res){
-			if($res->num_rows>0){
-				$data=$res->fetch_assoc();
-				$res->free();
-				return $data;
-			}
-			else
-				return FALSE;
-		}
-		else
-			return FALSE; 
-	}
-	else
-		return FALSE;
-}
 
 // digunakan untuk mengambil data pembeli
 function getDataPegawai($id_pegawai){

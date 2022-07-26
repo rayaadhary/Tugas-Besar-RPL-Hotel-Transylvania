@@ -32,70 +32,27 @@
                 <!-- Page content-->
                 <div class="container-fluid">
                     <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
-                    <form >
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="IdPetugas" placeholder="Id Petugas">
-                                    <label for="IdPetugas">ID Petugas</label>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="NamaPetugas" placeholder="Nama Petugas">
-                                    <label for="NamaPetugas">Nama Petugas</label>
-                                </div>
-                            </div> -->
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="NamaPetugas" placeholder="Nama Petugas">
-                                    <label for="NamaPetugas">Nama Petugas</label>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="BanyakOrang" placeholder="Banyak Orang">
-                                    <label for="BanyakOrang">Banyak Orang</label>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="jabatan" placeholder="Jabatan">
-                                    <label for="jabatan">Jabatan</label>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="date" class="form-control" id="TglCheckin" placeholder="Tanggal Check-in">
-                                    <label for="TglCheckin">Tanggal Check-in</label>
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="NamaPengguna" placeholder="Nama Pengguna">
-                                    <label for="NamaPengguna">Nama Pengguna</label>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="date" class="form-control" id="TglCheckout" placeholder="Tanggal Check-out">
-                                    <label for="TglCheckout">Tanggal Check-out</label>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="row g-3 m-2">  
-                            <div class="col-md-8">
-                                <div class="d-flex justify-content-left">
-                                <button type="submit" class="btn btn-primary mr-3">Tambah</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>                    
+                    <form method="POST" name="form" action="petugas-simpantambah.php">
+                    <div class="form-group mb-3">
+                        <label for="IdPetugas">ID Petugas</label>
+                        <input type="text" class="form-control" id="IdPetugas" name="IdPetugas" placeholder="Format ID Petugas huruf P diikuti 4 angka. Contoh P1234">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="NamaPetugas">Nama Petugas</label>
+                        <input type="text" class="form-control" id="NamaPetugas" name="NamaPetugas" placeholder="Nama Petugas">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="Jabatan">Jabatan</label>
+                        <input type="text" class="form-control" id="Jabatan" name="Jabatan" placeholder="Jabatan">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="NamaPengguna">Nama Pengguna</label>
+                        <input type="text" class="form-control" id="NamaPengguna" name="NamaPengguna" placeholder="Format nama pengguna bebas">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                    </div>
+                    </form>                  
                 </div>
             </div>
         </div>
@@ -105,3 +62,4 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
+

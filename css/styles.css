@@ -11597,7 +11597,7 @@ fieldset:disabled .btn {
 
 #sidebar-wrapper {
   min-height: 100vh;
-  margin-left: -15rem;
+  /* margin-left: -15rem; */
   transition: margin 0.25s ease-out;
 }
 
@@ -11607,7 +11607,7 @@ fieldset:disabled .btn {
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+  /* width: 15rem; */
 }
 
 #page-content-wrapper {
@@ -11629,6 +11629,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   }
 
   body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
-    margin-left: -15rem;
+    /* margin-left: -15rem; */
   }
 }

@@ -1,4 +1,8 @@
-<?php include_once("../functions.php") ?>
+<?php 
+include_once("../functions.php") ;
+session();
+$_SESSION["current_page"] = "Pemesanan";
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,15 +12,7 @@
         <meta name="author" content="" />
         <title>Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link rel="stylesheet" href="../css/styles.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-        <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
-        <script src="../js/scripts.js"></script>
+        <?php include_once('../head.php'); ?>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -57,7 +53,7 @@
                               <a href="pemesanan-tambah.php"><button type="button" class="btn btn-outline-primary rounded btn-sm mb-3">Tambah</button></a>
                          
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped" id="contoh" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No Pemesanan</th>
@@ -119,11 +115,6 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="../js/scripts.js"></script>
     </body>
-    <script>
-$(document).ready(function () {
-    $('#contoh').DataTable();
-});
-</script>
 </html>
