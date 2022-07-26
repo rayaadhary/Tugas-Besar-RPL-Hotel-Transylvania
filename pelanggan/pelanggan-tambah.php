@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelangga">
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="telp">No Telepon</label>

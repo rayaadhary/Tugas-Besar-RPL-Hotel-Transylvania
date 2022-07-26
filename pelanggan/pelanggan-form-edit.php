@@ -26,30 +26,46 @@
                     <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
                     <div class="row">
                         <div class="col-6 ps-4">
-                            <form>
-                                <div class="form-group mb-3">
-                                    <label for="nik">NIK</label>
-                                    <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx">
+                            <?php
+                            if (isset($_GET["nik"])) {
+                                $db = dbConnect();
+                                $nik = $db -> escape_string($_GET["nik"]);
+                                $sql = "SELECT * FROM tpelanggan WHERE nik = '$nik'";
+                                if ($edit = ambilsatubaris($db, $sql)) {
+                                    ?>
+                                    <form>
+                                        <div class="form-group mb-3">
+                                            <label for="nik">NIK</label>
+                                            <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx" value="<?= $edit["nik"]; ?>" readonly>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="nama">Nama</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan" value="<?= $edit["nama_pelanggan"]; ?>">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="telp">No Telepon</label>
+                                            <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx" value="<?= $edit["telepon"]; ?>">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="pengguna">Nama Pengguna</label>
+                                            <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna" value="<?= $edit["nama_pengguna"]; ?>">
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                                        </div>
+                                    </form>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="alert alert-secondary" role="alert">
+                                    NIK tidak ditemukan
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelangga">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="telp">No Telepon</label>
-                                    <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="pengguna">Nama Pengguna</label>
-                                    <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna">
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
-                                </div>
-                            </form>
+                                <?php
+                            }
+                            ?>
                         </div>  
                     </div>
-                    
                 </div>
             </div>
         </div>

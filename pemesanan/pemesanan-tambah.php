@@ -6,16 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Hotel Transylvania</title>
+        <title>Tambah Pemesanan | Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../css/styles.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-        <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
+        <?php include_once('../head.php'); ?>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -37,29 +30,29 @@
                         <div class="row g-3">   
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="NoPemesanan" placeholder="No Pemesanan">
-                                    <label for="NoPemesanan">No Pemesanan</label>
+                                    <input type="hidden" class="form-control" id="NoPemesanan" placeholder="Nomor Pemesanan" readonly>
+                                    <!-- <label for="NoPemesanan">Nomor Pemesanan</label> -->
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="LamaInap" placeholder="Lama Inap">
-                                    <label for="LamaInap">Lama Inap</label>
-                                </div>
-                            </div>
-                        <div class="row g-3">
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="form-floating m-2">
                                     <select class="form-select" id="IdPetugas" name="IdPetugas">
-                                        <option value="">Pilih Petugas</option>
+                                        <option value="opsiPilihPetugas">--Pilih Petugas--</option>
                                         <?php
-                                            $data = getListPetugas();
+                                            $data = getList("SELECT * FROM tpetugas ORDER BY nama_petugas");
                                             foreach ($data as $row) {
                                                 echo "<option value=\"" . $row["id_petugas"] . "\">" . $row["nama_petugas"] . "</option>";
                                             }
                                         ?>
                                     </select>
                                     <label for="IdPetugas">Nama Petugas</label>
+                                </div>
+                            </div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-floating m-2">
+                                    <input type="text" class="form-control" id="LamaInap" placeholder="Lama Inap">
+                                    <label for="LamaInap">Lama Inap</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -73,9 +66,9 @@
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
                                     <select class="form-select" id="NIK" name="NIK">
-                                        <option value="">Pilih Pelanggan</option>
+                                        <option value="opsiPilihPelanggan">--Pilih Pelanggan--</option>
                                         <?php
-                                            $data = getListPelanggan();
+                                            $data = getList("SELECT * FROM tpelanggan ORDER BY nama_pelanggan");
                                             foreach ($data as $row) {
                                                 echo "<option value=\"" . $row["id_pelanggan"] . "\">" . $row["nama_pelanggan"] . "</option>";
                                             }
@@ -87,7 +80,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
                                     <input type="date" class="form-control" id="TglCheckin" placeholder="Tanggal Check-in">
-                                    <label for="TglCheckin">Tanggal Check-in</label>
+                                    <label for="TglCheckin">Tanggal <i>Check-in</i></label>
                                 </div>
                             </div>
                         </div>
@@ -95,9 +88,9 @@
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
                                     <select class="form-select" id="NoKamar" name="NoKamar">
-                                        <option value="">Pilih Kamar</option>
+                                        <option value="opsiPilihKamar">--Pilih Kamar--</option>
                                         <?php
-                                            $data = getListKamar();
+                                            $data = getList("SELECT * FROM tkamar ORDER BY no_kamar");
                                             foreach ($data as $row) {
                                                 echo "<option value=\"" . $row["no_kamar"] . "\">" . $row["jenis_kamar"] . "</option>";
                                             }

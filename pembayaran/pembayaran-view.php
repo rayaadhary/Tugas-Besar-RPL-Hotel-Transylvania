@@ -10,7 +10,7 @@ $_SESSION["current_page"] = "Pembayaran";
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Kamar | Hotel Transylvania</title>
+        <title>Pembayaran | Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
         <?php include_once('../head.php'); ?>
     </head>

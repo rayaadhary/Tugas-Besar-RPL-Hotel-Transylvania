@@ -6,16 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Hotel Transylvania</title>
+        <title>Tambah Pembayaran | Hotel Transylvania</title>
         <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../css/styles.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-        <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
+        <?php include_once('../head.php'); ?>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -70,8 +63,8 @@
                                     <select class="form-select" id="NIK" name="NIK">
                                         <option value="">Pilih Pelanggan</option>
                                         <?php
-                                            $data = getListPemesanan(); 
-                                            foreach ($data as $row) {
+                                            $dataPelanggan = getList("SELECT * FROM tpelanggan ORDER BY nama_pelanggan"); 
+                                            foreach ($dataPelanggan as $row) {
                                                 echo "<option value=\"" . $row["id_pelanggan"] . "\">" . $row["nama_pelanggan"] . "</option>";
                                             }
                                         ?>
@@ -81,7 +74,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
-                                    <input type="date" class="form-control" id="TglCheckin" placeholder="Tanggal Check-in">
+                                    <input type="datetime-local" class="form-control" id="TglCheckin" placeholder="Tanggal Check-in">
                                     <label for="TglCheckin">Tanggal Check-in</label>
                                 </div>
                             </div>
@@ -92,8 +85,8 @@
                                     <select class="form-select" id="NoKamar" name="NoKamar">
                                         <option value="">Pilih Kamar</option>
                                         <?php
-                                            $data = getListKamar();
-                                            foreach ($data as $row) {
+                                            $dataKamar = getList("SELECT * FROM tkamar GROUP BY jenis_kamar ORDER BY jenis_kamar");
+                                            foreach ($dataKamar as $row) {
                                                 echo "<option value=\"" . $row["no_kamar"] . "\">" . $row["jenis_kamar"] . "</option>";
                                             }
                                         ?>
@@ -103,7 +96,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating m-2">
-                                    <input type="date" class="form-control" id="TglCheckout" placeholder="Tanggal Check-out">
+                                    <input type="datetime-local" class="form-control" id="TglCheckout" placeholder="Tanggal Check-out">
                                     <label for="TglCheckout">Tanggal Check-out</label>
                                 </div>
                             </div>
