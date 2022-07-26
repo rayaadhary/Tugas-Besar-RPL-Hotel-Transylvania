@@ -73,10 +73,10 @@ $_SESSION["current_page"] = "Kamar";
                                                     <td><?= $row['jenis_kamar']; ?></td>
                                                     <td><?= $row['status']; ?></td>
                                                     <td><?= $row['fasilitas']; ?></td>
-                                                    <td>Rp <?= number_format($row['harga'], 0, ",", "."); ?></td>
+                                                    <td class="text-end">Rp <?= number_format($row['harga'], 0, ",", "."); ?></td>
                                                     <td>
                                                         <!-- a href -->
-                                                        <a href="kamar-edit.php" class="btn btn-success btn-circle btn-sm">
+                                                        <a href="kamar-edit.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-success btn-circle btn-sm">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                         <!-- a href -->

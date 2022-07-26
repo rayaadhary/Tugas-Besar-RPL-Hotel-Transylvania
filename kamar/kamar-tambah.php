@@ -9,15 +9,7 @@ include_once("../functions.php")
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Tambah Kamar | Hotel Transylvania</title>
-        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../css/styles.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-        <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
+        <?php include_once "../head.php"; ?>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -35,35 +27,45 @@ include_once("../functions.php")
                 <div class="container-fluid">
                     <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
                     <div class="row">
-                      <div class="col-6 ps-4">
-                        <form>
-                    <div class="form-group mb-3">
-                    <label for="NoKamar">No Kamar</label>
-                    <input type="text" class="form-control" id="NoKamar" placeholder="No Kamar">
+                        <div class="col-6 ps-4">
+                            <form method="POST" action="">
+                                <div class="form-group mb-3">
+                                    <label for="NoKamar">No Kamar</label>
+                                    <input type="text" class="form-control" id="NoKamar" placeholder="No Kamar">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Jenis Kamar</label>
+                                    <select name="JenisKamar" class="form-control">
+                                        <option value="">-- Pilih Jenis --</option>
+                                        <option value="Standar">Standar</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Double">Double</option>
+                                        <option value="Family">Family</option>
+                                        <option value="Suite">Suite</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Status">Status</label>
+                                    <select name="Status" id="Status" class="form-control">
+                                        <option value="">-- Pilih Status --</option>
+                                        <option value="Lengkap">Lengkap</option>
+                                        <option value="Tidak Lengkap">Tidak Lengkap</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Fasilitas">Fasilitas</label>
+                                    <input type="text" name="fasilitas" class="form-control" id="Fasilitas" placeholder="Fasilitas">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="Harga">Harga</label>
+                                    <input type="text" name="harga" class="form-control" id="Harga" placeholder="Harga">
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                                </div>
+                            </form>
+                        </div>  
                     </div>
-                    <div class="form-group mb-3">
-                    <label for="JenisKamar">Jenis Kamar</label>
-                    <input type="text" class="form-control" id="JenisKamar" placeholder="Jenis Kamar">
-                    </div>
-                    <div class="form-group mb-3">
-                    <label for="Status">Status</label>
-                    <input type="text" class="form-control" id="Status" placeholder="Status">
-                    </div>
-                    <div class="form-group mb-3">
-                    <label for="Fasilitas">Fasilitas</label>
-                    <input type="text" class="form-control" id="Fasilitas" placeholder="Fasilitas">
-                    </div>
-                    <div class="form-group mb-3">
-                    <label for="Harga">Harga</label>
-                    <input type="text" class="form-control" id="Harga" placeholder="Harga">
-                    </div>
-                    <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mr-3">Tambah</button>
-                    </div>
-                    </form>
-                      </div>  
-                    </div>
-                    
                 </div>
             </div>
         </div>

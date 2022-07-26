@@ -71,7 +71,7 @@ $_SESSION["current_page"] = "Pelanggan";
                                             <td><?= $row['kata_sandi']; ?></td>
                                             <td>
                                                 <!-- a href -->
-                                                <a href="pelanggan-form-edit.php" class="btn btn-success btn-circle btn-sm">
+                                                <a href="pelanggan-form-edit.php?nik=<?= $row['nik']; ?>" class="btn btn-success btn-circle btn-sm">
                                                 <i class="fas fa-edit"></i>
                                                 </a>
                                                 <!-- a href -->

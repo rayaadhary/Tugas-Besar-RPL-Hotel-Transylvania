@@ -7,16 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Edit Pelanggan | Hotel Transylvania</title>
-        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-        <script src="https://kit.fontawesome.com/81efd83dc2.js" crossorigin="anonymous"></script>
-        <script src="../js/scripts.js"></script>
+        <?php include_once "../head.php"; ?>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -34,25 +25,29 @@
                 <div class="container-fluid">
                     <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
                     <div class="row">
-                      <div class="col-6 ps-4">
-                        <form >
-                    <div class="form-group mb-3">
-                    <label for="formGroupExampleInput">NIK</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="NIK">
-                    </div>
-                    <div class="form-group mb-3">
-                    <label for="formGroupExampleInput2">Nama Pelanggan</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Nama">
-                    </div>
-                    <div class="form-group mb-3">
-                    <label for="formGroupExampleInput2">No Telepon</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="No Telepon">
-                    </div>
-                    <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mr-3" name=">Tambah</button>
-                    </div>
-                    </form>
-                      </div>  
+                        <div class="col-6 ps-4">
+                            <form>
+                                <div class="form-group mb-3">
+                                    <label for="nik">NIK</label>
+                                    <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="nama">Nama</label>
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelangga">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="telp">No Telepon</label>
+                                    <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="pengguna">Nama Pengguna</label>
+                                    <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna">
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                                </div>
+                            </form>
+                        </div>  
                     </div>
                     
                 </div>

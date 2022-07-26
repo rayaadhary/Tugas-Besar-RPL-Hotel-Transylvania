@@ -56,7 +56,7 @@ $_SESSION["current_page"] = "Pemesanan";
                                 <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>No Pemesanan</th>
+                                            <th>No</th>
                                             <th>Nama Petugas</th>
                                             <th>Jenis Kamar</th>
                                             <th>Nama Pemesan</th>
@@ -69,11 +69,12 @@ $_SESSION["current_page"] = "Pemesanan";
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $i = 1;
                                         $data = $res->fetch_all(MYSQLI_ASSOC);
                                         foreach($data as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['no_pemesanan']; ?></td>
+                                            <td><?= $i++; ?></td>
                                             <td><?= $row['nama_petugas']; ?></td>
                                             <td><?= $row['jenis_kamar']; ?></td>
                                             <td><?= $row['nama_pelanggan']; ?></td>

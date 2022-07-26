@@ -11602,12 +11602,26 @@ fieldset:disabled .btn {
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
+  /* padding: 0.875rem 1.25rem; */
   font-size: 1.2rem;
+  width: 200px;
 }
 
 #sidebar-wrapper .list-group {
   /* width: 15rem; */
+}
+
+#sidebar-wrapper a.active {
+  background-color: #0D6EFD;
+}
+
+#sidebar-wrapper a.inactive:hover {
+  color: #fff;
+  background-color: #808080;
+}
+
+#sidebar-wrapper a > span {
+  padding-left: 8px;
 }
 
 #page-content-wrapper {

@@ -68,7 +68,7 @@ $_SESSION["current_page"] = "Petugas";
                                                 <td><?= $row['nama_pengguna'];?></td>
                                                 <td>
                                                     <!-- a href -->
-                                                    <a href="petugas-edit.php" class="btn btn-success btn-circle btn-sm">
+                                                    <a href="petugas-edit.php?id_petugas=<?= $row['id_petugas'] ?>" class="btn btn-success btn-circle btn-sm">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <!-- a href -->
