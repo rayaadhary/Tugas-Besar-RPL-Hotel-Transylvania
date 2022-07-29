@@ -1,6 +1,6 @@
 <?php 
 include_once("../functions.php");
-session();
+sessionPetugas();
 $_SESSION["current_page"] = "Pembayaran"; 
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $_SESSION["current_page"] = "Pembayaran";
         <?php 
         if(isset($_POST['tblTambah'])) {
             $db = dbConnect();
-            $noPembayaran = $db -> escape_string($_POST["noPembayaran"]);
+            // $noPembayaran = $db -> escape_string($_POST["noPembayaran"]);
             $opsiBayar = $db -> escape_string($_POST["opsiBayar"]);
             $nilaiBayar = $db -> escape_string($_POST["nilaiBayar"]);
             $noPemesanan = $db -> escape_string($_POST["noPemesanan"]);
@@ -86,88 +86,39 @@ $_SESSION["current_page"] = "Pembayaran";
                     <h6 class="mt-4">
                         <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
                     </h6>
-                    <form>
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="hidden" class="form-control" id="NoPembayaran" name="noPembayaran" placeholder="Nomor Pembayaran">
-                                    <!-- <label for="NoPembayaran">No Pembayaran</label> -->
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                <select class="form-control" id="OpsiBayar" name="opsiBayar" placeholder="Opsi Bayar">
-                                    <option value="">Pilih Opsi Bayar</option>
-                                    <option value="Tunai">Tunai</option>
-                                    <option value="Non Tunai">Non Tunai</option>
-                                </select>
+                    <div class="row">
+                        <div class="col-6 ps-4">
+                            <form method="POST" action="">
+                                <div class="form-group mb-3">
                                     <label for="OpsiBayar">Opsi Bayar</label>
+                                    <select class="form-control" id="OpsiBayar" name="opsiBayar" placeholder="Opsi Bayar">
+                                        <option value="">Pilih Opsi Bayar</option>
+                                        <option value="Tunai">Tunai</option>
+                                        <option value="Non Tunai">Non Tunai</option>
+                                    </select>
                                 </div>
-                            </div>
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="NilaiBayar" name="nilaiBayar" placeholder="Nilai Bayar">
-                                    <label for="NilaiBayar">Nilai Bayar</label>
+                                <div class="form-group mb-3">
+                                    <label for="nilaiBayar">Nilai Bayar</label>
+                                    <input class="form-control" id="nilaiBayar" name="nilaiBayar" placeholder="0">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="text" class="form-control" id="BanyakOrang" name="banyakOrang" placeholder="Banyak Orang">
-                                    <label for="BanyakOrang">Banyak Orang</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <select class="form-select" id="NIK" name="nik">
-                                        <option value="">Pilih Pelanggan</option>
+                                <div class="form-group mb-3">
+                                    <label for="Status">Pemesanan</label>
+                                    <select class="form-select" id="noPemesanan" name="noPemesanan">
+                                        <option value="">Pilih Pemesanan</option>
                                         <?php
-                                            $dataPelanggan = getList("SELECT * FROM tpelanggan ORDER BY nama_pelanggan"); 
-                                            foreach ($dataPelanggan as $row) {
-                                                echo "<option value=\"" . $row["id_pelanggan"] . "\">" . $row["nama_pelanggan"] . "</option>";
+                                            $dataPesan = getList("SELECT * FROM tmemesan ORDER BY no_pemesanan"); 
+                                            foreach ($dataPesan as $row) {
+                                                echo "<option value=\"" . $row["no_pemesanan"] . "\">" . $row["no_pemesanan"] . "</option>";
                                             }
                                         ?>
                                     </select>
-                                    <label for="NIK">Nama Pelanggan</label>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="datetime-local" class="form-control" id="TglCheckin" name="tglCheckin" placeholder="Tanggal Check-in">
-                                    <label for="TglCheckin">Tanggal Check-in</label>
+                                <div class="d-flex justify-content-center">
+                                    <button id="tblTambah" type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row g-3">   
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <select class="form-select" id="NoKamar" name="noKamar">
-                                        <option value="">Pilih Kamar</option>
-                                        <?php
-                                            $dataKamar = getList("SELECT * FROM tkamar GROUP BY jenis_kamar ORDER BY jenis_kamar");
-                                            foreach ($dataKamar as $row) {
-                                                echo "<option value=\"" . $row["no_kamar"] . "\">" . $row["jenis_kamar"] . "</option>";
-                                            }
-                                        ?>
-                                    </select>
-                                    <label for="NoKamar">Jenis Kamar</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating m-2">
-                                    <input type="datetime-local" class="form-control" id="TglCheckout" name="tglCheckin" placeholder="Tanggal Check-out">
-                                    <label for="TglCheckout">Tanggal Check-out</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-3 m-2">  
-                            <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
-                            </div>
-                        </div>
-                    </form>                    
+                            </form>
+                        </div>  
+                    </div>                 
                 </div>
             </div>
         </div>

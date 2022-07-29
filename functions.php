@@ -2,13 +2,35 @@
 define("DEVELOPMENT", TRUE);
 function dbConnect()
 {
-	$db = new mysqli("localhost", "root", "", "db_hotel_transylvaniaa"); // Sesuaikan dengan konfigurasi server anda.
+	$db = new mysqli("localhost", "root", "", "db_hotel_transylvania"); // Sesuaikan dengan konfigurasi server anda.
 	return $db;
 }
 // getListKategori digunakan untuk mengambil seluruh data dari tabel produk
-function session()
+function session()// untuk akses berdua
 {
 	session_start();
+	if (!isset($_SESSION["nama_pengguna"])) {
+		session_destroy();
+		header("Location: ../index.php?error=4");
+	}
+}
+
+function sessionPetugas()
+{
+	session_start();
+	if ($_SESSION["user"] != "Petugas") {
+		session_destroy();
+		header("Location: ../index.php?error=5");
+	}
+}
+
+function sessionPelanggan()
+{
+	session_start();
+	if ($_SESSION["user"] != "Pelanggan") {
+		session_destroy();
+		header("Location: ../index.php?error=5");
+	}
 }
 
 function getList($query)
@@ -43,22 +65,6 @@ function banner()
 	</div>
 <?php
 }
-function navigator()
-{
-?>
-	<div id="navigator"></div>
-		| <a href="barang.php">Barang</a>
-		| <a href="kategori.php">Kategori</a>
-		| <a href="pelanggan.php">Pelanggan</a>
-		| <a href="pegawai.php">Pegawai</a>
-		| <a href="kantor.php">Kantor</a>
-		| <a href="pesanan.php">Pesanan</a>
-		| <a href="pembayaran.php">Pembayaran</a>
-		| <a href="logout.php">Log Out</a>
-		|
-	</div>
-<?php
-}
 
 function pagination()
 {
@@ -75,7 +81,7 @@ function pagination()
 function showError($message)
 {
 ?>
-	<div style="background-color:#FAEBD7;padding:10px;border:1px solid red;margin:15px 0px">
+	<div style="background-color:#FAEBD7;padding:10px;border:1px solid red;margin:50px 0px">
 		<?php echo $message; ?>
 	</div>
 <?php

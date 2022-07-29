@@ -1,5 +1,6 @@
 <?php 
-include_once("../functions.php") 
+include_once("../functions.php");
+sessionPetugas(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@ include_once("../functions.php")
     </head>
     <body>
         <?php 
-        if(isset($_POST['tblTambah'])) {
+        if(isset($_POST['TblEdit'])) {
             $db = dbConnect();
             $id = $db -> escape_string(trim($_POST["id"]));
             $nama = $db -> escape_string(trim($_POST["nama"]));

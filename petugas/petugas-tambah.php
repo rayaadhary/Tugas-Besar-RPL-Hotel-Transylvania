@@ -1,4 +1,7 @@
-<?php include_once("../functions.php") ?>
+<?php 
+include_once("../functions.php"); 
+sessionPetugas();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,10 +19,24 @@
             $id = $db -> escape_string(trim($_POST["id"]));
             $nama = $db -> escape_string(trim($_POST["nama"]));
             $jabatan = $db -> escape_string(trim($_POST["jabatan"]));
+            
+            if (isset($_POST["tugasA"])) {
+                $tugas = $db -> escape_string(trim($_POST["tugasA"]));
+                $col = "tugas_administrasi";
+            } else if(isset($_POST["tugasK"])) {
+                $tugas = $db -> escape_string(trim($_POST["tugasK"]));
+                $col = "tugas_keuangan";
+            } else if (isset($_POST["tugasR"])) {
+                $tugas = $db -> escape_string(trim($_POST["tugasR"]));
+                $col = "pelayanan";
+            } else if (isset($_POST["noLantai"])) {
+                $tugas = $db -> escape_string(trim($_POST["noLantai"]));
+                $col = "no_lantai";
+            }
             // $namaPengguna = $db -> escape_string(trim($_POST["fasilitas"]));
             // begin validasi
             $salah = "";
-            if ( strlen($id) == 0 || strlen($id) < 3 || strlen($id) > 5) {
+            if (strlen($id) == 0 || strlen($id) < 3 || strlen($id) > 5) {
                 $salah .= "Id petugas tidak boleh kosong atau tidak sah.<br>";
             } else {
                 $res = $db -> query("SELECT COUNT(*) data FROM tpetugas WHERE id_petugas = '$id'"); // telusuri
@@ -51,14 +68,14 @@
                     <h3 class="card-text">Penyimpanan Data Petugas</h3>
                     <p class="card-text">Semua data valid.</p>
                     <?php
-                    $query = "INSERT INTO tkamar(id_petugas, nama_petugas, jabatan) VALUES ('$id','$nama','$jabatan')";
+                    $query = "INSERT INTO tpetugas(id_petugas, nama_petugas, jabatan, $col) VALUES ('$id','$nama','$jabatan', '$tugas')";
                     $result = $db -> query($query);
                     if ($result) {
                         if ($db -> affected_rows > 0) {
                             ?>
                             <p class="card-text">Data berhasil ditambahkan.</p>
                             <div class="d-flex justify-content-center">
-                                <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                                <a href="petugas-view.php" class="btn btn-primary">Lihat Data</a>
                             </div>
                             <?php
                         }
@@ -115,7 +132,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="Jabatan">Jabatan</label>
-                                    <select name="jabatan" id="Jabatan" class="form-control" onchange="klik()">
+                                    <select name="jabatan" id="Jabatan" class="form-control" onchange="updateTugasJabatan()">
                                         <option value="">-- Pilih Jabatan --</option>
                                         <option value="Petugas Administrasi">Petugas Administrasi</option>
                                         <option value="Petugas Bagian Keuangan">Petugas Bagian Keuangan</option>
@@ -123,37 +140,10 @@
                                         <option value="Pramukamar">Pramukamar</option>
                                     </select>
                                 </div>
-                                <?php
-                                if ($_POST["jabatan"] == "Petugas Administrasi") {
-                                    ?>
-                                    <div class="form-group mb-3">
-                                        <label for="tugasA">Tugas Administrasi</label>
-                                        <input type="text" class="form-control" id="tugasA" name="tugasA">
-                                    </div>
-                                    <?php
-                                } elseif ($_POST["jabatan"] == "Petugas Bagian Keuangan") {
-                                    ?>    
-                                    <div class="form-group mb-3">
-                                        <label for="tugasK">Tugas Keuangan</label>
-                                        <input type="text" class="form-control" id="tugasK" name="tugasK">
-                                    </div>
-                                    <?php
-                                } elseif ($_POST["jabatan"] == "Petugas Resepsionis") {
-                                    ?>
-                                    <div class="form-group mb-3">
-                                        <label for="pelayanan">Pelayanan</label>
-                                        <input type="text" class="form-control" id="pelayanan" name="pelayanan">
-                                    </div>
-                                    <?php
-                                } elseif ($_POST["jabatan"] == "Pramukamar") {
-                                    ?>
-                                    <div class="form-group mb-3">
-                                        <label for="noLantai">No Lantai</label>
-                                        <input type="text" class="form-control" id="noLantai" name="noLantai">
-                                    </div>
-                                    <?php
-                                }
-                                ?>
+                                <div class="form-group mb-3">
+                                    <label id="labelTugasJabatan" for="key"></label>
+                                    <input type="text" class="form-control" id="key" name="key" readonly>
+                                </div>
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
                                 </div>
@@ -163,5 +153,29 @@
                 </div>
             </div>
         </div>
+        <script>
+            function updateTugasJabatan() {
+                inputTugasJabatan = document.getElementById("key");
+                inputTugasJabatan.removeAttribute("readonly");
+                var jabatan = document.getElementById("Jabatan").selectedIndex;
+                var label = document.getElementById("labelTugasJabatan");
+                if (jabatan == 0) {
+                    label.innerHTML = "(Pilih jabatan dahulu)";
+                    inputTugasJabatan.readOnly = true;
+                } else if (jabatan == 1) {
+                    label.innerHTML = "Tugas Administrasi";
+                    inputTugasJabatan.setAttribute("name", "tugasA");
+                } else if (jabatan == 2) {
+                    label.innerHTML = "Tugas Bagian Keuangan";
+                    inputTugasJabatan.setAttribute("name", "tugasK");
+                } else if (jabatan == 3) {
+                    label.innerHTML = "Pelayanan";
+                    inputTugasJabatan.setAttribute("name", "tugasR");
+                } else if (jabatan == 4) {
+                    label.innerHTML = "Nomor Lantai";
+                    inputTugasJabatan.setAttribute("name", "noLantai");
+                }
+            }
+        </script>
     </body>
 </html>

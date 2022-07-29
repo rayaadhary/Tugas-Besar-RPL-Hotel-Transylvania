@@ -1,6 +1,6 @@
-<?php 
+<?php
 include_once("../functions.php");
-session();
+sessionPelanggan();
 $_SESSION["current_page"] = "Pemesanan";
 // session login petugas/pelanggan
 ?>
@@ -18,65 +18,72 @@ $_SESSION["current_page"] = "Pemesanan";
 </head>
 
 <body>
-    <?php 
-    if(isset($_POST['tblTambah'])) {
+    <?php
+    if (isset($_POST["tblTambah"])) {
         $db = dbConnect();
-        $noPemesanan = $db -> escape_string($_POST["noPemesanan"]);
-        $nik = $db -> escape_string($_POST["nik"]);
+        $nik = $db->escape_string($_POST["nik"]);
         $tglCheckin = $_POST["tglCheckin"];
         $waktuCheckin = $_POST["waktuCheckin"];
-        $checkin = $db -> escape_string($tglCheckin . " " . $waktuCheckin);
+        $checkin = $db->escape_string($tglCheckin . " " . $waktuCheckin);
         $tglCheckout = $_POST["tglCheckout"];
         $waktuCheckout = $_POST["waktuCheckout"];
-        $checkout = $db -> escape_string($tglCheckout . " " . $waktuCheckout);
-        $noKamar = $db -> escape_string($_POST["noKamar"]);
-        $idPetugas = $db -> escape_string($_POST["idPetugas"]);
-        $banyakOrang = $db -> escape_string($_POST["banyakOrang"]);
-        $lamaInap = $db -> escape_string(5);
-        // var_dump($lamaInap); 
+        $checkout = $db->escape_string($tglCheckout . " " . $waktuCheckout);
+        $noKamar = $db->escape_string($_POST["noKamar"]);
+        $idPetugas = $db->escape_string($_POST["idPetugas"]);
+        $banyakOrang = $db->escape_string($_POST["banyakOrang"]);
+
+        $earlier = new DateTime($tglCheckin);
+        $later = new DateTime($tglCheckout);
+
+        $abs_diff = $later->diff($earlier)->format("%a");
         // begin validasi
         $salah = "";
-        
-        // if ($tglCheckin < date("Y-m-d")) {
-            if ($tglCheckin > $tglCheckout) {
-                if ($waktuCheckin > $waktuCheckout) {
-                    $salah .= "Check-in dan check-out tidak sah.<br>";
-                }
-            }
-        // }
 
-        if ($nik = "") {
+        if ($tglCheckin >= date("Y-m-d")) {
+            if ($tglCheckin <= $tglCheckout) {
+                if ($waktuCheckin > $waktuCheckout) {
+                    $salah .= "Waktu check-in tidak boleh melebihi/melewati waktu check-out.<br>";
+                }
+            } else { // tgl checkin melewati atau lebih dari tanggal checkout
+                $salah .= "Tanggal check-in tidak boleh melebihi/melewati tanggal check-out.<br>";
+            }
+        } else { // tanggal checkin sebelum tanggal sekarang
+            $salah .= "Tanggal check-in tidak boleh sebelum tanggal hari ini.<br>";
+        }
+
+        if ($nik == "") {
             $salah .= "Nama pemesan harus dipilih.<br>";
         }
 
-        if ($noKamar = "") {
+        if ($noKamar == "") {
             $salah .= "Kamar harus dipilih.<br>";
         }
 
-        if ($idPetugas = "") {
+        if ($idPetugas == "") {
             $salah .= "Petugas harus dipilih.<br>";
         }
 
-        ?>
+    ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
-        <?php 
-        // end validasi
-        if ($salah == "") {
+            <?php
+            // end validasi
+            if ($salah == "") {
             ?>
                 <h3 class="card-text">Penyimpanan Data Pemesanan</h3>
                 <p class="card-text">Semua data valid.</p>
                 <?php
-                $query = "INSERT INTO tmemesan VALUES ('$noPemesanan', '$idPetugas', '$noKamar', '$nik', $banyakOrang, $lamaInap, '$checkin', '$checkout')";
-                $result = $db -> query($query);
-                var_dump($query);
+                $query = "INSERT INTO tmemesan(id_petugas, no_kamar, nik, banyak_orang, lama_inap, tgl_check_in, tgl_check_out) 
+                            VALUES ('$idPetugas', '$noKamar', '$nik', $banyakOrang, $abs_diff, '$checkin', '$checkout')
+                        ";
+                $result = $db->query($query);
                 if ($result) {
-                    if ($db -> affected_rows > 0) {
-                        ?>
+                    if ($db->affected_rows > 0) {
+                ?>
                         <p class="card-text">Data berhasil ditambahkan.</p>
                         <div class="d-flex justify-content-center">
-                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                            <a href="pemesanan-view.php" class="btn btn-primary">Lihat Data</a>
                         </div>
-                        <?php
+                    <?php
                     }
                 } else {
                     ?>
@@ -84,31 +91,26 @@ $_SESSION["current_page"] = "Pemesanan";
                     <div class="d-flex justify-content-center">
                         <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
                     </div>
-                    <?php
-                    echo "Errornya : " . $db -> error;
+                <?php
+                    echo "Errornya : " . $db->error;
                 }
-        } else {
-            ?>
-            <h3 class="card-text">Penyimpanan Data Pemesanan</h3>
-            <p class="card-text">Berikut kesalahan - kesalahan dalam validasi : </p>
-            <p class="card-text"><?= $salah; ?></p>
-            <div class="d-flex justify-content-center">
-                <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
-            </div>
+            } else {
+                ?>
+                <h3 class="card-text">Penyimpanan Data Pemesanan</h3>
+                <p class="card-text">Berikut kesalahan - kesalahan dalam validasi : </p>
+                <p class="card-text"><?= $salah; ?></p>
+                <div class="d-flex justify-content-center">
+                    <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                </div>
             <?php
-        }
-        ?>
+            }
+            ?>
         </div>
-        <?php
+    <?php
     }
     ?>
     <div class="d-flex" id="wrapper">
-        <?php 
-        // if petugas yg login
-        include_once("../sidebar-petugas.php");
-        // else if pelanggan yg login
-        // include_once("../sidebar-pelanggan.php");
-        ?>
+        <?php include_once("../sidebar-pelanggan.php"); ?>
 
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
@@ -126,7 +128,7 @@ $_SESSION["current_page"] = "Pemesanan";
                 </h6>
                 <form method="POST" action="">
                     <!-- Auto Input -->
-                    <input type="hidden" class="form-control" id="NoPemesanan" name="noPemesanan" placeholder="Nomor Pemesanan" readonly>
+                    <!-- <input type="hidden" class="form-control" id="NoPemesanan" name="noPemesanan" placeholder="Nomor Pemesanan" readonly> -->
                     <!-- <label for="NoPemesanan">Nomor Pemesanan</label> -->
 
                     <!-- Baris 1 -->
@@ -137,11 +139,8 @@ $_SESSION["current_page"] = "Pemesanan";
                                     <option value="">--Pilih Pemesan--</option>
                                     <?php
                                     $data = getList("SELECT * FROM tpelanggan ORDER BY nama_pelanggan");
-                                    // foreach ($data as $row) {
-                                    //     echo "<option value=\"" . $row["nik"] . "\">" . $row["nama_pelanggan"] . "</option>";
-                                    // }
-                                    foreach($data as $row){
-                                    echo "<option value=\"".$row["nik"]."\">".$row["nama_pelanggan"]."</option>";
+                                    foreach ($data as $row) {
+                                        echo "<option value=\"" . $row["nik"] . "\">" . $row["nama_pelanggan"] . "</option>";
                                     }
                                     ?>
                                 </select>

@@ -1,6 +1,6 @@
 <?php 
 include_once("../functions.php");
-session();
+sessionPetugas();
 $_SESSION["current_page"] = "Kamar";
 
 ?>
@@ -26,8 +26,10 @@ $_SESSION["current_page"] = "Kamar";
             $harga = $db -> escape_string($_POST["harga"]);
             // begin validasi
             $salah = "";
-            if ( strlen($noKamar) == 0 || strlen($noKamar) > 3) {
-                $salah .= "Nomor kamar tidak boleh kosong atau tidak sah.<br>";
+            if (substr($noKamar, 0, 1) == 0) {
+                $salah .= "Digit pertama nomor kamar tidak boleh diisi angka nol.<br>";
+            } else if ( strlen($noKamar) == 0 || strlen($noKamar) > 3) {
+                $salah .= "Nomor kamar tidak boleh kosong atau lebih dari 3 digit.<br>";
             } else {
                 $res = $db -> query("SELECT COUNT(*) data FROM tkamar WHERE no_kamar = '$noKamar'"); // telusuri
                 if ($res) {
@@ -41,17 +43,13 @@ $_SESSION["current_page"] = "Kamar";
                     $salah .= "Nomor kamar tidak ditemukan.<br>";
                 }
             }
-            
-            if ($jenisKamar == "") {
-                $salah .= "Jenis kamar harus dipilih";
-            }
 
-            if ( is_numeric($fasilitas) ) {
-                $salah .= "Fasilitas tidak boleh berupa angka.<br>";
+            if ( is_numeric($fasilitas) || strlen($fasilitas) > 20) {
+                $salah .= "Fasilitas tidak boleh berupa angka saja dan tidak lebih dari 20 karakter.<br>";
             }
         
-            if ( !is_numeric($harga) && strlen($harga) == 0 ) {
-                $salah .= "Harga harus berupa angka dan tidak boleh kosong.<br>";
+            if ( !is_numeric($harga) || strlen($harga) > 7 ) {
+                $salah .= "Harga harus berupa angka 7 digit.<br>";
             }
             ?>
             <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
@@ -119,7 +117,7 @@ $_SESSION["current_page"] = "Kamar";
                             <form method="POST" action="">
                                 <div class="form-group mb-3">
                                     <label for="NoKamar">No Kamar</label>
-                                    <input type="text" class="form-control" id="NoKamar" name="noKamar" placeholder="No Kamar">
+                                    <input type="text" class="form-control" id="NoKamar" name="noKamar" placeholder="No Kamar" maxlength="3" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Jenis Kamar</label>

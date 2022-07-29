@@ -106,8 +106,25 @@ function tblTambah() {
     // wrp.classList.add("blur-64");
 }
 
+
 // wrp = document.getElementById("wrapper");
 // card = document.getElementById("alertBox");
 // card.onload = function() {
 //     wrp.style.filter = "blur(64px)";
 // }
+
+$('#logout').on('click', function(e){
+	e.preventDefault();
+	var getLink = $(this).attr('href');
+
+	Swal.fire({
+  title: 'Yakin ingin logout?',
+  showDenyButton: true,
+  confirmButtonText: 'Yakin',
+  denyButtonText: `Tidak`,
+	}).then((result) => {
+	  if (result.value) {
+	    window.location.href = getLink;
+	  }
+	})
+});

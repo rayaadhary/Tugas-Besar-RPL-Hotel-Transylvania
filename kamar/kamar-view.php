@@ -20,7 +20,13 @@ $_SESSION["current_page"] = "Kamar";
 
 <body>
     <div class="d-flex" id="wrapper">
-        <?php include_once("../sidebar-petugas.php"); ?>
+        <?php 
+        if ($_SESSION["user"] == "Petugas") {
+            include_once("../sidebar-petugas.php"); 
+        } else if ($_SESSION["user"] == "Pelanggan") {
+            include_once("../sidebar-pelanggan.php");
+        }
+        ?>
 
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
@@ -48,8 +54,10 @@ $_SESSION["current_page"] = "Kamar";
                             $sql = "SELECT * FROM tkamar";
                             $res = $db->query($sql);
                             if ($res) {
-                        ?>
+                                if ($_SESSION["user"] == "Petugas") {
+                                ?>
                                 <a href="kamar-tambah.php"><button type="button" class="btn btn-outline-primary rounded btn-sm mb-3">Tambah</button></a>
+                                <?php } ?>
 
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
@@ -60,7 +68,10 @@ $_SESSION["current_page"] = "Kamar";
                                                 <th class="dt-center">Status</th>
                                                 <th class="dt-center">Fasilitas</th>
                                                 <th class="dt-center">Harga</th>
-                                                <th class="dt-center">Aksi</th>
+                                                <?php 
+                                                if ($_SESSION["user"] == "Petugas")
+                                                    echo "<th class='dt-center'>Aksi</th>";
+                                                ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,16 +85,20 @@ $_SESSION["current_page"] = "Kamar";
                                                     <td><?= $row['status']; ?></td>
                                                     <td><?= $row['fasilitas']; ?></td>
                                                     <td class="text-end">Rp <?= number_format($row['harga'], 0, ",", "."); ?></td>
-                                                    <td class="text-center">
-                                                        <!-- a href -->
-                                                        <a href="kamar-edit.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-success btn-circle btn-sm">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <!-- a href -->
-                                                        <a href="kamar-hapus.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-danger btn-circle btn-sm hapus-data">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
+                                                    <?php
+                                                    if ($_SESSION["user"] == "Petugas") {
+                                                        ?>
+                                                        <td class="text-center">
+                                                            <a href="kamar-edit.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-success btn-circle btn-sm">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a href="kamar-hapus.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-danger btn-circle btn-sm hapus-data">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </tr>
                                             <?php
                                             }
@@ -105,5 +120,4 @@ $_SESSION["current_page"] = "Kamar";
         </div>
     </div>
 </body>
-
 </html>

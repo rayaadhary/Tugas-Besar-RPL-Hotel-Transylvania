@@ -1,6 +1,6 @@
 <?php
 include_once("../functions.php");
-session();
+sessionPetugas();
 $_SESSION["current_page"] = "Kamar";
 ?>
 <!DOCTYPE html>
@@ -27,16 +27,12 @@ $_SESSION["current_page"] = "Kamar";
         // begin validasi
         $salah = "";
     
-        if ($jenisKamar == "") {
-            $salah .= "Jenis kamar harus dipilih";
-        }
-
-        if ( is_numeric($fasilitas) ) {
-            $salah .= "Fasilitas tidak boleh berupa angka.<br>";
+        if ( is_numeric($fasilitas) || strlen($fasilitas) > 20) {
+            $salah .= "Fasilitas tidak boleh berupa angka saja dan tidak lebih dari 20 karakter.<br>";
         }
     
-        if ( !is_numeric($harga) && strlen($harga) == 0 ) {
-            $salah .= "Harga harus berupa angka dan tidak boleh kosong.<br>";
+        if ( !is_numeric($harga) || strlen($harga) > 7 ) {
+            $salah .= "Harga harus berupa angka 7 digit.<br>";
         }
         ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
@@ -44,37 +40,37 @@ $_SESSION["current_page"] = "Kamar";
         // end validasi
         if ($salah == "") {
             ?>
-                <h3 class="card-text">Edit Data Kamar</h3>
-                <p class="card-text">Semua data valid.</p>
-                <?php
-                $query = "UPDATE tkamar SET no_kamar = '$noKamar', jenis_kamar = '$jenisKamar', status = '$status', fasilitas = '$fasilitas', harga = '$harga' WHERE no_kamar = '$noKamar'";
-                $result = $db -> query($query);
-                if ($result) {
-                    if ($db -> affected_rows > 0) {
-                        ?>
-                        <p class="card-text">Data berhasil diubah.</p>
-                        <div class="d-flex justify-content-center">
-                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
-                        </div>
-                        <?php
-                    } else {
-                        ?>
-                        <p class="card-text">Data berhasil di ubah, tanpa perubahan data.</p>
-                        <div class="d-flex justify-content-center">
-                            <a href="javascript:history.back()" class="btn btn-primary">Ubah Kembali</a>
-                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
-                        </div>
-                        <?php
-                    }
-                } else {
+            <h3 class="card-text">Edit Data Kamar</h3>
+            <p class="card-text">Semua data valid.</p>
+            <?php
+            $query = "UPDATE tkamar SET no_kamar = '$noKamar', jenis_kamar = '$jenisKamar', status = '$status', fasilitas = '$fasilitas', harga = '$harga' WHERE no_kamar = '$noKamar'";
+            $result = $db -> query($query);
+            if ($result) {
+                if ($db -> affected_rows > 0) {
                     ?>
-                    <p class="card-text">Data gagal disimpan.</p>
+                    <p class="card-text">Data berhasil diubah.</p>
                     <div class="d-flex justify-content-center">
-                        <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                        <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
                     </div>
                     <?php
-                    echo "Errornya : " . $db -> error;
+                } else {
+                    ?>
+                    <p class="card-text">Data berhasil di ubah, tanpa perubahan data.</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="javascript:history.back()" class="btn btn-primary mx-4">Ubah Kembali</a>
+                        <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                    </div>
+                    <?php
                 }
+            } else {
+                ?>
+                <p class="card-text">Data gagal disimpan.</p>
+                <div class="d-flex justify-content-center">
+                    <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                </div>
+                <?php
+                echo "Errornya : " . $db -> error;
+            }
         } else {
             ?>
             <h3 class="card-text">Edit Data Kamar</h3>
@@ -162,7 +158,7 @@ $_SESSION["current_page"] = "Kamar";
                                 <input type="text" class="form-control" id="Harga" placeholder="Harga" value="<?= $edit["harga"]; ?>">
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary mr-3" name="tblEdit">Edit</button>
+                                <button type="submit" class="btn btn-primary mr-3" name="tblEdit">Ubah</button>
                             </div>
                         </form>
                         <?php

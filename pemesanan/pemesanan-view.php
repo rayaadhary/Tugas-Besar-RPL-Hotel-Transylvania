@@ -1,6 +1,6 @@
 <?php
 include_once("../functions.php");
-session();
+sessionPetugas();
 $_SESSION["current_page"] = "Pemesanan";
 ?>
 <!DOCTYPE html>
@@ -52,47 +52,39 @@ $_SESSION["current_page"] = "Pemesanan";
                             $res = $db->query($sql);
                             if ($res) {
                         ?>
-                                <a href="pemesanan-tambah.php"><button type="button" class="btn btn-outline-primary rounded btn-sm mb-3">Tambah</button></a>
+                                <!-- <a href="pemesanan-tambah.php"><button type="button" class="btn btn-outline-primary rounded btn-sm mb-3">Tambah</button></a> -->
 
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th class="dt-center">No</th>
                                                 <th class="dt-center">Nama Pemesan</th>
                                                 <th class="dt-center">No Kamar</th>
                                                 <th class="dt-center">Jenis Kamar</th>
                                                 <th class="dt-center">Banyak Orang</th>
-                                                <th class="dt-center">Lama Inap (hari)</th>
+                                                <th class="dt-center">Lama Inap</th>
                                                 <th class="dt-center">Tanggal <i>Check-in</i></th>
                                                 <th class="dt-center">Tanggal <i>Check-out</i></th>
                                                 <th class="dt-center">Nama Petugas</th>
-                                                <th class="dt-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $no =  1;
                                             $data = $res->fetch_all(MYSQLI_ASSOC);
                                             foreach ($data as $row) {
                                             ?>
                                                 <tr>
+                                                    <td class="text-center"><?= $no++; ?></td>
                                                     <td><?= $row['nama_pelanggan']; ?></td>
                                                     <td class="text-center"><?= $row['no_kamar']; ?></td>
                                                     <td><?= $row['jenis_kamar']; ?></td>
                                                     <td class="text-center"><?= $row['banyak_orang']; ?></td>
-                                                    <td class="text-center"><?= $row['lama_inap']; ?></td>
+                                                    <td class="text-center"><?= $row['lama_inap']; ?> hari</td>
                                                     <td class="text-center"><?= $row['tgl_check_in']; ?></td>
                                                     <td class="text-center"><?= $row['tgl_check_out']; ?></td>
                                                     <td><?= $row['nama_petugas']; ?></td>
-                                                    <td class="text-center">
-                                                        <!-- a href -->
-                                                        <a href="#" class="btn btn-success btn-circle btn-sm">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <!-- a href -->
-                                                        <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </td>
                                                 </tr>
                                             <?php
                                             }

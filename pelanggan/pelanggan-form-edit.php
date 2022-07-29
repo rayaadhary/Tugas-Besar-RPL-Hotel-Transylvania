@@ -1,4 +1,92 @@
-<?php include_once("../functions.php") ?>
+<?php 
+include_once("../functions.php");
+session();
+$_SESSION["current_page"] = "Pelanggan";
+if (isset($_POST['tblEdit'])) {
+    if ($db->connect_errno == 0) {
+        $nik = $db->escape_string($_POST['nik']);
+        $nama = $db->escape_string(trim($_POST['nama']));
+        $telp = $db->escape_string(trim($_POST['telp']));
+        $pengguna = $db->escape_string(trim($_POST['pengguna']));
+        $password = $db -> escape_string(trim($_POST['katasandi']));
+        // $password = $db->escape_string(trim($_POST['password']));
+        $salah = "";
+        // $query = $db->query("SELECT * FROM tpelanggan WHERE nik = '$nik'");
+        // if ($query->num_rows > 0)
+        //     $salah .= "NIK sudah terdaftar.<br>";
+
+        // if (!is_numeric($nik) || strlen($nik) == 0 ||strlen($nik) != 16)
+        //     $salah .= "NIK berupa angka 16 digit dan harus diisi.<br>";
+    
+        if (is_numeric($nama) || strlen($nama) > 30)
+            $salah .= "Nama tidak boleh berisi angka dan tidak boleh lebih dari 30 karakter.<br>";
+
+        if (!is_numeric($telp) || strlen($telp) > 13)
+            $salah .= "Telepon harus angka dan tidak boleh lebih dari 13 digit.<br>";
+
+        if (strlen($pengguna) == 0 || strlen($pengguna) > 10)
+            $salah .= "Nama Pengguna harus harus diisi dan tidak boleh lebih dari 10 karakter.<br>";
+
+        if ($pengguna != $_SESSION["nama_pengguna"]) {
+            $query = $db->query("SELECT * FROM tpelanggan WHERE nama_pengguna = '$pengguna'");
+            if ($query->num_rows > 0)
+                $salah .= "Nama Pengguna sudah terdaftar.<br>";
+        }
+
+        if (strlen($password) == 0 || strlen($password) > 8)
+            $salah .= "Kata Sandi harus harus diisi dan tidak boleh lebih dari 8 karakter.<br>";
+            
+        ?>
+        <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
+        <?php
+        if ($salah == "") {
+            ?>
+            <h3 class="card-text">Edit Profil Pelanggan</h3>
+            <p class="card-text">Semua data valid.</p>
+            <?php
+            $query = "UPDATE tpelanggan SET nama_pelanggan = '$nama', telepon = '$telp', nama_pengguna = '$pengguna', kata_sandi = '$password' WHERE nik = '$nik'";
+            $res =  $db->query($query);
+            if ($res) {
+                if ($db->affected_rows > 0) {
+                    ?>
+                    <p class="card-text">Data berhasil diubah.</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="pelanggan-view.php" class="btn btn-primary">Lihat Profil</a>
+                    </div>
+                <?php
+                } else {
+                    ?>
+                    <p class="card-text">Data berhasil di ubah, tanpa perubahan data.</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="javascript:history.back()" class="btn btn-secondary mx-4">Ubah Kembali</a>
+                        <a href="pelanggan-view.php" class="btn btn-primary">Lihat Profil</a>
+                    </div>
+                    <?php
+                }
+            } else {
+                ?>
+                <p class="card-text">Data gagal disimpan.</p>
+                <div class="d-flex justify-content-center">
+                    <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                </div>
+                <?php
+                echo "Errornya : " . $db -> error;
+            }
+        } else {
+            ?>
+            <h3 class="card-text">Edit Profil Pelanggan</h3>
+            <p class="card-text">Berikut kesalahan - kesalahan dalam validasi : </p>
+            <p class="card-text"><?= $salah; ?></p>
+            <div class="d-flex justify-content-center">
+                <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+            </div>
+            <?php
+        }
+    } else
+        echo "Gagal koneksi" . (DEVELOPMENT ? " : " . $db->connect_error : "") . "<br>";
+}
+?>
+</div>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,7 +99,7 @@
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-            <?php include_once("../sidebar-petugas.php"); ?>
+            <?php include_once("../sidebar-pelanggan.php"); ?>
 
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
@@ -23,10 +111,13 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h6 class="mt-4">
+                    <h6 class="my-4">
                         <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
                     </h6>
                     <div class="row">
+                        <div class="mx-3">
+                            <h4>Edit Profil Pelanggan</h4>
+                        </div>
                         <div class="col-6 ps-4">
                             <?php
                             if (isset($_GET["nik"])) {
@@ -34,8 +125,8 @@
                                 $nik = $db -> escape_string($_GET["nik"]);
                                 $sql = "SELECT * FROM tpelanggan WHERE nik = '$nik'";
                                 if ($edit = ambilsatubaris($db, $sql)) {
-                                    ?>
-                                    <form>
+                                    ?> 
+                                    <form method="POST" action="">
                                         <div class="form-group mb-3">
                                             <label for="nik">NIK</label>
                                             <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx" value="<?= $edit["nik"]; ?>" readonly>
@@ -52,8 +143,15 @@
                                             <label for="pengguna">Nama Pengguna</label>
                                             <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna" value="<?= $edit["nama_pengguna"]; ?>">
                                         </div>
+                                        <div class="form-group mb-3">
+                                            <label for="katasandi">Kata Sandi</label>
+                                            <input type="password" class="form-control" id="katasandi" name="katasandi" placeholder="Kata Sandi" value="<?= $edit["kata_sandi"]; ?>">
+                                        </div>
                                         <div class="d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                                            <a href=javascript:history.back(); class="p-3">
+                                                <button class="btn btn-secondary" type="button">Kembali</button>
+                                            </a>
+                                            <a class="p-3"><button type="submit" class="btn btn-primary mr-3" name="tblEdit">Ubah</button></a>
                                         </div>
                                     </form>
                                     <?php

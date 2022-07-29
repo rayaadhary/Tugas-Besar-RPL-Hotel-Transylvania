@@ -1,6 +1,6 @@
 <?php 
 include_once("../functions.php") ;
-session();
+sessionPetugas();
 $_SESSION["current_page"] = "Petugas";
 ?>
 <!DOCTYPE html>
@@ -53,6 +53,10 @@ $_SESSION["current_page"] = "Petugas";
                                                 <th class="dt-center">Nama Petugas</th>
                                                 <th class="dt-center">Jabatan</th>
                                                 <th class="dt-center">Nama Pengguna</th>
+                                                <th class="dt-center">No Lantai</th>
+                                                <th class="dt-center">Pelayanan</th>
+                                                <th class="dt-center">Tugas Keuangan</th>
+                                                <th class="dt-center">Tugas Administrasi</th>
                                                 <th class="dt-center">Aksi</th>
                                             </tr>
                                         </thead>
@@ -66,6 +70,10 @@ $_SESSION["current_page"] = "Petugas";
                                                 <td><?= $row['nama_petugas']; ?></td>
                                                 <td><?= $row['jabatan']; ?></td>
                                                 <td><?= $row['nama_pengguna'];?></td>
+                                                <td><?= $row['no_lantai'];?></td>
+                                                <td><?= $row['pelayanan'];?></td>
+                                                <td><?= $row['tugas_keuangan'];?></td>
+                                                <td><?= $row['tugas_administrasi'];?></td>
                                                 <td class="text-center">
                                                     <!-- a href -->
                                                     <a href="petugas-edit.php?id_petugas=<?= $row['id_petugas'] ?>" class="btn btn-success btn-circle btn-sm">
