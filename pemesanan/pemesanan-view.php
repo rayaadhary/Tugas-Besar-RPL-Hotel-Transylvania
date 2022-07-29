@@ -42,7 +42,7 @@ $_SESSION["current_page"] = "Pemesanan";
                         <?php
                         $db = dbConnect();
                         if ($db->connect_errno == 0) {
-                            $sql = "SELECT m.no_pemesanan, p.nama_petugas, k.jenis_kamar, pe.nama_pelanggan, 
+                            $sql = "SELECT m.no_pemesanan, p.nama_petugas, k.no_kamar, k.jenis_kamar, pe.nama_pelanggan, 
                                     m.banyak_orang, m.lama_inap, m.tgl_check_out, m.tgl_check_in
                                     FROM tmemesan m
                                     JOIN tpetugas p ON m.id_petugas = p.id_petugas
@@ -58,33 +58,32 @@ $_SESSION["current_page"] = "Pemesanan";
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Nama Petugas</th>
-                                                <th>Jenis Kamar</th>
-                                                <th>Nama Pelanggan</th>
-                                                <th>Banyak Orang</th>
-                                                <th>Lama Inap</th>
-                                                <th>Tanggal <i>Check-in</i></th>
-                                                <th>Tanggal <i>Check-out</i></th>
-                                                <th>Aksi</th>
+                                                <th class="dt-center">Nama Pemesan</th>
+                                                <th class="dt-center">No Kamar</th>
+                                                <th class="dt-center">Jenis Kamar</th>
+                                                <th class="dt-center">Banyak Orang</th>
+                                                <th class="dt-center">Lama Inap (hari)</th>
+                                                <th class="dt-center">Tanggal <i>Check-in</i></th>
+                                                <th class="dt-center">Tanggal <i>Check-out</i></th>
+                                                <th class="dt-center">Nama Petugas</th>
+                                                <th class="dt-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $i = 1;
                                             $data = $res->fetch_all(MYSQLI_ASSOC);
                                             foreach ($data as $row) {
                                             ?>
                                                 <tr>
-                                                    <td><?= $i++; ?></td>
-                                                    <td><?= $row['nama_petugas']; ?></td>
-                                                    <td><?= $row['jenis_kamar']; ?></td>
                                                     <td><?= $row['nama_pelanggan']; ?></td>
-                                                    <td><?= $row['banyak_orang']; ?></td>
-                                                    <td><?= $row['lama_inap']; ?></td>
-                                                    <td><?= $row['tgl_check_in']; ?></td>
-                                                    <td><?= $row['tgl_check_out']; ?></td>
-                                                    <td>
+                                                    <td class="text-center"><?= $row['no_kamar']; ?></td>
+                                                    <td><?= $row['jenis_kamar']; ?></td>
+                                                    <td class="text-center"><?= $row['banyak_orang']; ?></td>
+                                                    <td class="text-center"><?= $row['lama_inap']; ?></td>
+                                                    <td class="text-center"><?= $row['tgl_check_in']; ?></td>
+                                                    <td class="text-center"><?= $row['tgl_check_out']; ?></td>
+                                                    <td><?= $row['nama_petugas']; ?></td>
+                                                    <td class="text-center">
                                                         <!-- a href -->
                                                         <a href="#" class="btn btn-success btn-circle btn-sm">
                                                             <i class="fas fa-edit"></i>
@@ -114,10 +113,6 @@ $_SESSION["current_page"] = "Pemesanan";
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../js/scripts.js"></script>
 </body>
 
 </html>

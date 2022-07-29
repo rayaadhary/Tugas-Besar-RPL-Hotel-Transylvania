@@ -1,5 +1,8 @@
 <?php 
-include_once("../functions.php") 
+include_once("../functions.php");
+session();
+$_SESSION["current_page"] = "Kamar";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +15,89 @@ include_once("../functions.php")
         <?php include_once "../head.php"; ?>
     </head>
     <body>
+        <!-- <article id="article" class="alert-box-hide"> -->
+        <?php 
+        if(isset($_POST['tblTambah'])) {
+            $db = dbConnect();
+            $noKamar = $db -> escape_string(trim($_POST["noKamar"]));
+            $jenisKamar = $db -> escape_string($_POST["jenisKamar"]);
+            $status = $db -> escape_string($_POST["status"]);
+            $fasilitas = $db -> escape_string(trim($_POST["fasilitas"]));
+            $harga = $db -> escape_string($_POST["harga"]);
+            // begin validasi
+            $salah = "";
+            if ( strlen($noKamar) == 0 || strlen($noKamar) > 3) {
+                $salah .= "Nomor kamar tidak boleh kosong atau tidak sah.<br>";
+            } else {
+                $res = $db -> query("SELECT COUNT(*) data FROM tkamar WHERE no_kamar = '$noKamar'"); // telusuri
+                if ($res) {
+                    $data = $res -> fetch_assoc();
+                    if ($data["data"]) {
+                        $salah .= "Nomor kamar sudah ada.<br>";
+                    } elseif (!is_numeric($noKamar)) {
+                        $salah .= "Nomor kamar harus berupa angka.<br>";
+                    } 
+                } else {
+                    $salah .= "Nomor kamar tidak ditemukan.<br>";
+                }
+            }
+            
+            if ($jenisKamar == "") {
+                $salah .= "Jenis kamar harus dipilih";
+            }
+
+            if ( is_numeric($fasilitas) ) {
+                $salah .= "Fasilitas tidak boleh berupa angka.<br>";
+            }
+        
+            if ( !is_numeric($harga) && strlen($harga) == 0 ) {
+                $salah .= "Harga harus berupa angka dan tidak boleh kosong.<br>";
+            }
+            ?>
+            <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
+            <?php 
+            // end validasi
+            if ($salah == "") {
+                ?>
+                    <h3 class="card-text">Penyimpanan Data Kamar</h3>
+                    <p class="card-text">Semua data valid.</p>
+                    <?php
+                    $query = "INSERT INTO tkamar VALUES ('$noKamar','$jenisKamar','$status','$fasilitas','$harga')";
+                    $result = $db -> query($query);
+                    if ($result) {
+                        if ($db -> affected_rows > 0) {
+                            ?>
+                            <p class="card-text">Data berhasil ditambahkan.</p>
+                            <div class="d-flex justify-content-center">
+                                <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <p class="card-text">Data gagal disimpan.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                        </div>
+                        <?php
+                        echo "Errornya : " . $db -> error;
+                    }
+            } else {
+                ?>
+                <h3 class="card-text">Penyimpanan Data Kamar</h3>
+                <p class="card-text">Berikut kesalahan - kesalahan dalam validasi : </p>
+                <p class="card-text"><?= $salah; ?></p>
+                <div class="d-flex justify-content-center">
+                    <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                </div>
+                <?php
+            }
+            ?>
+            </div>
+            <?php
+        }
+        ?>
+        <!-- </article> -->
         <div class="d-flex" id="wrapper">
             <?php include_once("../sidebar-petugas.php"); ?>
 
@@ -25,17 +111,19 @@ include_once("../functions.php")
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
+                    <h6 class="mt-4">
+                        <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
+                    </h6>
                     <div class="row">
                         <div class="col-6 ps-4">
                             <form method="POST" action="">
                                 <div class="form-group mb-3">
                                     <label for="NoKamar">No Kamar</label>
-                                    <input type="text" class="form-control" id="NoKamar" placeholder="No Kamar">
+                                    <input type="text" class="form-control" id="NoKamar" name="noKamar" placeholder="No Kamar">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Jenis Kamar</label>
-                                    <select name="JenisKamar" class="form-control">
+                                    <select name="jenisKamar" class="form-control">
                                         <option value="">-- Pilih Jenis --</option>
                                         <option value="Standar">Standar</option>
                                         <option value="Single">Single</option>
@@ -46,7 +134,7 @@ include_once("../functions.php")
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="Status">Status</label>
-                                    <select name="Status" id="Status" class="form-control">
+                                    <select name="status" id="Status" class="form-control">
                                         <option value="">-- Pilih Status --</option>
                                         <option value="Lengkap">Lengkap</option>
                                         <option value="Tidak Lengkap">Tidak Lengkap</option>
@@ -61,7 +149,7 @@ include_once("../functions.php")
                                     <input type="text" name="harga" class="form-control" id="Harga" placeholder="Harga">
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
+                                    <button id="tblTambah" type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>
                                 </div>
                             </form>
                         </div>  
@@ -69,9 +157,5 @@ include_once("../functions.php")
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>

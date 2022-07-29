@@ -1,5 +1,86 @@
-<?php include_once("../functions.php") 
+<?php 
+
+include_once("../functions.php"); 
+
+if(isset($_POST['tblTambah'])){
+    if($db->connect_errno==0){
+     $nik           = $db->escape_string($_POST['nik']);
+     $nama      =  $db->escape_string($_POST['nama']);
+     $telp     = $db->escape_string($_POST['telp']);
+     $pengguna        = $db->escape_string($_POST['pengguna']);
+     $password = $db->escape_string(base64_encode($_POST['password']));
+
+     $nik = trim($nik);
+
+     $query = $db->query("SELECT * FROM tpelanggan WHERE nik = '$nik'");
+
+       if ($query->num_rows > 0) 
+        $salah .= "NIK Sudah terdaftar<br>";
+
+    if (!is_numeric($nik) || strlen($nik) == 0)
+    $salah .= "NIK harus angka dan tidak boleh kosong<br>";
+
+    if (strlen($nama) == 0)
+    $salah .= "Nama harus tidak boleh kosong<br>";
+
+    if (strlen($telp) == 0 || !is_numeric($telp))
+    $salah .= "Telepon harus angka dan tidak boleh kosong<br>";
+
+     if (strlen($pengguna) == 0)
+    $salah .= "Username harus tidak boleh kosong<br>";
+
+    if (strlen($password) == 0)
+    $salah .= "Password harus tidak boleh kosong<br>";
+
+    if ($salah == "") {
+    ?>
+			<div class="alert alert-primary" role="alert">
+			Tidak terjadi kesalahan. Semua data valid. Data akan disimpan ke database
+			</div>
+	<?php    
+     $query = "INSERT INTO tpelanggan VALUES ('$nik','$nama','$telp','$pengguna', '$password')";
+     $res =  $db -> query($query);
+     if ($res) {
+        if ($db -> affected_rows > 0){
+        ?>
+				<div class="alert alert-primary d-flex align-items-center" role="alert">
+				<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+				<div>
+				Data berhasil disimpan.
+				</div>
+				</div>
+				<br>
+				<a href="barang.php" class="btn btn-dark">Tampil Barang</a>
+				<?php
+			}
+    }
+    else {
+         ?>
+            Data gagal disimpan karena NIK mungkin sudah ada.<br>
+			<a href=javascript:history.back(); class="btn btn-dark">Kembali</a>
+			<?php
+		}
+        }
+		else {
+		?>
+		<div class="d-flex justify-content-center">
+			<div class="card text-center" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title fs-5">Terjadi kesalahan sebagai berikut</h5>
+				<p class="card-text"><?=$salah;?></p>
+				<a href=javascript:history.back(); class="btn btn-primary">Kembali Ke Form</a>
+			</div>
+			</div>
+			</div>
+		<?php
+		}
+	}
+	else
+		echo "Gagal koneksi".(DEVELOPMENT?" : ".$db->connect_error:"")."<br>";
+}
 ?>
+</div>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,25 +107,46 @@
                 <!-- Page content-->
                 <div class="container-fluid">
                 <!-- <h2>Tambah Data</h2> -->
-                    <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
+                    <h6 class="mt-4">
+                        <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
+                    </h6>
                     <div class="row">
                         <div class="col-6 ps-4">
-                            <form>
+                            <form method="POST" class="was-validated">
                                 <div class="form-group mb-3">
                                     <label for="nik">NIK</label>
-                                    <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx">
+                                    <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx" required>
+                                    <div class="invalid-feedback">
+                                    Harap isi NIK
+                                    </div> 
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan">
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan" required>
+                                     <div class="invalid-feedback">
+                                    Harap isi Nama
+                                    </div> 
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="telp">No Telepon</label>
-                                    <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx">
+                                    <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx" required>
+                                     <div class="invalid-feedback">
+                                    Harap isi No Telepon
+                                    </div> 
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="pengguna">Nama Pengguna</label>
-                                    <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna">
+                                    <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna" required>
+                                        <div class="invalid-feedback">
+                                    Harap isi Nama Pengguna
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password Pengguna" required>
+                                        <div class="invalid-feedback">
+                                    Harap isi Password
+                                    </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>

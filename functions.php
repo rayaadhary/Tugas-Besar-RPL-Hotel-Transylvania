@@ -2,7 +2,7 @@
 define("DEVELOPMENT", TRUE);
 function dbConnect()
 {
-	$db = new mysqli("localhost", "root", "", "db_hotel_transylvania"); // Sesuaikan dengan konfigurasi server anda.
+	$db = new mysqli("localhost", "root", "", "db_hotel_transylvaniaa"); // Sesuaikan dengan konfigurasi server anda.
 	return $db;
 }
 // getListKategori digunakan untuk mengambil seluruh data dari tabel produk
@@ -25,6 +25,8 @@ function getList($query)
 	} else
 		return FALSE;
 }
+
+$db = dbConnect();
 
 function ambilsatubaris($db, $sql)
 {

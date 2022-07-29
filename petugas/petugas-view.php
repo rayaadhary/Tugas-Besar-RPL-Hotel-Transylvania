@@ -49,11 +49,11 @@ $_SESSION["current_page"] = "Petugas";
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>ID Petugas</th>
-                                                <th>Nama Petugas</th>
-                                                <th>Jabatan</th>
-                                                <th>Nama Pengguna</th>
-                                                <th>Aksi</th>
+                                                <th class="dt-center">ID Petugas</th>
+                                                <th class="dt-center">Nama Petugas</th>
+                                                <th class="dt-center">Jabatan</th>
+                                                <th class="dt-center">Nama Pengguna</th>
+                                                <th class="dt-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -62,11 +62,11 @@ $_SESSION["current_page"] = "Petugas";
                                             foreach($data as $row){
                                             ?>
                                             <tr>
-                                                <td><?= $row['id_petugas']; ?></td>
+                                                <td class="text-center"><?= $row['id_petugas']; ?></td>
                                                 <td><?= $row['nama_petugas']; ?></td>
                                                 <td><?= $row['jabatan']; ?></td>
                                                 <td><?= $row['nama_pengguna'];?></td>
-                                                <td>
+                                                <td class="text-center">
                                                     <!-- a href -->
                                                     <a href="petugas-edit.php?id_petugas=<?= $row['id_petugas'] ?>" class="btn btn-success btn-circle btn-sm">
                                                         <i class="fas fa-edit"></i>
@@ -95,9 +95,5 @@ $_SESSION["current_page"] = "Petugas";
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../js/scripts.js"></script>
     </body>
 </html>

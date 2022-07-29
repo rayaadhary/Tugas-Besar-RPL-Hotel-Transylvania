@@ -1,11 +1,18 @@
 /*!
-* Start Bootstrap - Simple Sidebar v6.0.5 (https://startbootstrap.com/template/simple-sidebar)
-* Copyright 2013-2022 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
-*/
+ * Start Bootstrap - Simple Sidebar v6.0.5 (https://startbootstrap.com/template/simple-sidebar)
+ * Copyright 2013-2022 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
 // 
 // Scripts
 // 
+
+// wrp = document.getElementById("wrapper");
+// tbl = document.getElementById("tblTambah");
+
+// tbl.addEventListener("click", function() {
+//     alert('ok');
+// });
 
 window.onload = function () {
     showDateTime();
@@ -32,8 +39,8 @@ window.addEventListener('DOMContentLoaded', event => {
 // Display Date and Time
 function showDateTime() {
     const today = new Date();
-    const weekday = ["Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu"];
-    const monthName = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+    const weekday = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+    const monthName = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
     let day = weekday[today.getDay()];
     let date = today.getDate();
     let month = monthName[today.getMonth()];
@@ -59,7 +66,7 @@ function convertTimeToDoubleDigit(i) { //To display minutes and seconds as two d
     return i;
 }
 
-$('.hapus-data').on('click',function(e){
+$('.hapus-data').on('click', function (e) {
     e.preventDefault();
     var getLink = $(this).attr('href');
 
@@ -84,11 +91,23 @@ $(document).ready(function () {
             url: 'https://cdn.datatables.net/plug-ins/1.10.20/i18n/Indonesian.json'
         },
         dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'pdfHtml5',
-                    download: 'open'
-                }
-        ]
+        buttons: [{
+            extend: 'pdfHtml5',
+            download: 'open'
+        }]
     });
 });
+
+function tblTambah() {
+    ab = document.getElementById("article");
+    ab.className = ab.className.replace("alert-box-hide", "alert-box-show");
+    wrp = document.getElementById("wrapper");
+    wrp.style.filter = "blur(64px)";
+    // wrp.classList.add("blur-64");
+}
+
+// wrp = document.getElementById("wrapper");
+// card = document.getElementById("alertBox");
+// card.onload = function() {
+//     wrp.style.filter = "blur(64px)";
+// }

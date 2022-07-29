@@ -50,12 +50,12 @@ $_SESSION["current_page"] = "Pelanggan";
                                 <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>NIK</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>Telepon</th>
-                                            <th>Nama Pengguna</th>
-                                            <th>Kata Sandi</th>
-                                            <th>Aksi</th>
+                                            <th class="dt-center">NIK</th>
+                                            <th class="dt-center">Nama Pelanggan</th>
+                                            <th class="dt-center">Telepon</th>
+                                            <th class="dt-center">Nama Pengguna</th>
+                                            <th class="dt-center">Kata Sandi</th>
+                                            <th class="dt-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,12 +64,12 @@ $_SESSION["current_page"] = "Pelanggan";
                                         foreach($data as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['nik']; ?></td>
+                                            <td class="text-center"><?= $row['nik']; ?></td>
                                             <td><?= $row['nama_pelanggan']; ?></td>
-                                            <td><?= $row['telepon']; ?></td>
+                                            <td class="text-center"><?= $row['telepon']; ?></td>
                                             <td><?= $row['nama_pengguna'];?></td>
                                             <td><?= $row['kata_sandi']; ?></td>
-                                            <td>
+                                            <td class="text-center">
                                                 <!-- a href -->
                                                 <a href="pelanggan-form-edit.php?nik=<?= $row['nik']; ?>" class="btn btn-success btn-circle btn-sm">
                                                 <i class="fas fa-edit"></i>
@@ -100,9 +100,5 @@ $_SESSION["current_page"] = "Pelanggan";
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../js/scripts.js"></script>
     </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 include_once("../functions.php");
+session();
+$_SESSION["current_page"] = "Kamar";
 
 $no = $_GET['no_kamar'];
 

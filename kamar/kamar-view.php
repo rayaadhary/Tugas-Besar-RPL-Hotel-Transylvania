@@ -54,13 +54,13 @@ $_SESSION["current_page"] = "Kamar";
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr>
-                                                <th>No Kamar</th>
-                                                <th>Jenis Kamar</th>
-                                                <th>Status</th>
-                                                <th>Fasilitas</th>
-                                                <th>Harga</th>
-                                                <th>Aksi</th>
+                                            <tr> 
+                                                <th class="dt-center">No Kamar</th>
+                                                <th class="dt-center">Jenis Kamar</th>
+                                                <th class="dt-center">Status</th>
+                                                <th class="dt-center">Fasilitas</th>
+                                                <th class="dt-center">Harga</th>
+                                                <th class="dt-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -69,12 +69,12 @@ $_SESSION["current_page"] = "Kamar";
                                             foreach ($data as $row) {
                                             ?>
                                                 <tr>
-                                                    <td><?= $row['no_kamar']; ?></td>
+                                                    <td class="text-center"><?= $row['no_kamar']; ?></td>
                                                     <td><?= $row['jenis_kamar']; ?></td>
                                                     <td><?= $row['status']; ?></td>
                                                     <td><?= $row['fasilitas']; ?></td>
                                                     <td class="text-end">Rp <?= number_format($row['harga'], 0, ",", "."); ?></td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <!-- a href -->
                                                         <a href="kamar-edit.php?no_kamar=<?= $row['no_kamar'] ?>" class="btn btn-success btn-circle btn-sm">
                                                             <i class="fas fa-edit"></i>
@@ -104,10 +104,6 @@ $_SESSION["current_page"] = "Kamar";
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="../js/scripts.js"></script>
 </body>
 
 </html>

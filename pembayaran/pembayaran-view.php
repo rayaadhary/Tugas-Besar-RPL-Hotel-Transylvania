@@ -50,10 +50,10 @@ $_SESSION["current_page"] = "Pembayaran";
                                     <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No Pembayaran</th>
-                                                <th>Opsi Bayar</th>
-                                                <th>Nilai Bayar</th>
-                                                <th>No Pemesanan</th>
+                                                <th class="dt-center">No Pembayaran</th>
+                                                <th class="dt-center">Opsi Bayar</th>
+                                                <th class="dt-center">Nilai Bayar</th>
+                                                <th class="dt-center">No Pemesanan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -62,10 +62,10 @@ $_SESSION["current_page"] = "Pembayaran";
                                             foreach ($data as $row) {
                                             ?>
                                                 <tr>
-                                                    <td><?= $row['no_pembayaran']; ?></td>
+                                                    <td class="text-center"><?= $row['no_pembayaran']; ?></td>
                                                     <td><?= $row['opsi_bayar']; ?></td>
-                                                    <td>Rp <?= number_format($row['nilai_bayar'],0,",","."); ?></td>
-                                                    <td><?= $row['no_pemesanan']; ?></td>
+                                                    <td class="text-end">Rp <?= number_format($row['nilai_bayar'],0,",","."); ?></td>
+                                                    <td class="text-center"><?= $row['no_pemesanan']; ?></td>
                                                 </tr>
                                             <?php
                                             }
@@ -85,9 +85,5 @@ $_SESSION["current_page"] = "Pembayaran";
 
                                 </div>
                 </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../js/scripts.js"></script>
     </body>
 </html>

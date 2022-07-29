@@ -1,5 +1,7 @@
 <?php
 include_once("../functions.php");
+session();
+$_SESSION["current_page"] = "Kamar";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +16,80 @@ include_once("../functions.php");
 </head>
 
 <body>
+    <?php 
+    if(isset($_POST['tblEdit'])) {
+        $db = dbConnect();
+        $noKamar = $db -> escape_string(trim($_POST["noKamar"]));
+        $jenisKamar = $db -> escape_string($_POST["jenisKamar"]);
+        $status = $db -> escape_string($_POST["status"]);
+        $fasilitas = $db -> escape_string(trim($_POST["fasilitas"]));
+        $harga = $db -> escape_string($_POST["harga"]);
+        // begin validasi
+        $salah = "";
+    
+        if ($jenisKamar == "") {
+            $salah .= "Jenis kamar harus dipilih";
+        }
+
+        if ( is_numeric($fasilitas) ) {
+            $salah .= "Fasilitas tidak boleh berupa angka.<br>";
+        }
+    
+        if ( !is_numeric($harga) && strlen($harga) == 0 ) {
+            $salah .= "Harga harus berupa angka dan tidak boleh kosong.<br>";
+        }
+        ?>
+        <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
+        <?php 
+        // end validasi
+        if ($salah == "") {
+            ?>
+                <h3 class="card-text">Edit Data Kamar</h3>
+                <p class="card-text">Semua data valid.</p>
+                <?php
+                $query = "UPDATE tkamar SET no_kamar = '$noKamar', jenis_kamar = '$jenisKamar', status = '$status', fasilitas = '$fasilitas', harga = '$harga' WHERE no_kamar = '$noKamar'";
+                $result = $db -> query($query);
+                if ($result) {
+                    if ($db -> affected_rows > 0) {
+                        ?>
+                        <p class="card-text">Data berhasil diubah.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                        </div>
+                        <?php
+                    } else {
+                        ?>
+                        <p class="card-text">Data berhasil di ubah, tanpa perubahan data.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:history.back()" class="btn btn-primary">Ubah Kembali</a>
+                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    ?>
+                    <p class="card-text">Data gagal disimpan.</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+                    </div>
+                    <?php
+                    echo "Errornya : " . $db -> error;
+                }
+        } else {
+            ?>
+            <h3 class="card-text">Edit Data Kamar</h3>
+            <p class="card-text">Berikut kesalahan - kesalahan dalam validasi : </p>
+            <p class="card-text"><?= $salah; ?></p>
+            <div class="d-flex justify-content-center">
+                <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+            </div>
+            <?php
+        }
+        ?>
+        </div>
+        <?php
+    }
+    ?>
     <div class="d-flex" id="wrapper">
         <?php include_once("../sidebar-petugas.php"); ?>
 

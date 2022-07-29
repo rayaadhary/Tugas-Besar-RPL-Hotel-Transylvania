@@ -23,7 +23,9 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <div class="mt-4 pb-4"><span id="Day"></span><span id="Date"></span><span id="Time"></span></div>
+                    <h6 class="mt-4">
+                        <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
+                    </h6>
                     <div class="row">
                         <div class="col-6 ps-4">
                             <?php
