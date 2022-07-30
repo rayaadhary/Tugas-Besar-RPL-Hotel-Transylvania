@@ -30,6 +30,8 @@ if (isset($_POST["btn_login"])) {
             } else {
                 header('Location: index.php?error=1');
             }
+        } else {
+            header('Location: index.php?error=1');
         }
     }
 } else {

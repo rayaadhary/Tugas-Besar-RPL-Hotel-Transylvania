@@ -12316,3 +12316,8 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .alert-box-show {
   display: block;
 }
+
+#logout:hover {
+  background-color: #ff0000;
+  color: #fff;
+}

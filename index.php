@@ -54,7 +54,7 @@
 								if (isset($_GET["error"])) {
 									$error = $_GET["error"];
 									if ($error == 1)
-										showError("Nama Pengguna dan password tidak sesuai.");
+										showError("Nama Pengguna dan Kata Sandi tidak sesuai.");
 									else if ($error == 2)
 										showError("Error database. Silahkan hubungi administrator");
 									else if ($error == 3)

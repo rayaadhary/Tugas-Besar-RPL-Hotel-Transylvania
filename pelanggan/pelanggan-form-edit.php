@@ -18,14 +18,14 @@ if (isset($_POST['tblEdit'])) {
         // if (!is_numeric($nik) || strlen($nik) == 0 ||strlen($nik) != 16)
         //     $salah .= "NIK berupa angka 16 digit dan harus diisi.<br>";
     
-        if (is_numeric($nama) || strlen($nama) > 30)
-            $salah .= "Nama tidak boleh berisi angka dan tidak boleh lebih dari 30 karakter.<br>";
+        if (is_numeric($nama))
+            $salah .= "Nama tidak boleh berisi angka.<br>";
 
-        if (!is_numeric($telp) || strlen($telp) > 13)
-            $salah .= "Telepon harus angka dan tidak boleh lebih dari 13 digit.<br>";
+        if (!is_numeric($telp))
+            $salah .= "Telepon harus berupa angka.<br>";
 
-        if (strlen($pengguna) == 0 || strlen($pengguna) > 10)
-            $salah .= "Nama Pengguna harus harus diisi dan tidak boleh lebih dari 10 karakter.<br>";
+        if (strlen($pengguna) == 0)
+            $salah .= "Nama Pengguna harus diisi.<br>";
 
         if ($pengguna != $_SESSION["nama_pengguna"]) {
             $query = $db->query("SELECT * FROM tpelanggan WHERE nama_pengguna = '$pengguna'");
@@ -33,8 +33,8 @@ if (isset($_POST['tblEdit'])) {
                 $salah .= "Nama Pengguna sudah terdaftar.<br>";
         }
 
-        if (strlen($password) == 0 || strlen($password) > 8)
-            $salah .= "Kata Sandi harus harus diisi dan tidak boleh lebih dari 8 karakter.<br>";
+        if (strlen($password) == 0)
+            $salah .= "Kata Sandi harus diisi.<br>";
 
         ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">

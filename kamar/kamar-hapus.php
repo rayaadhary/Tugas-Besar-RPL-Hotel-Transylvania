@@ -14,5 +14,4 @@ if($res){
     header('location: kamar-view.php');
 }
 else
-echo "Gagal menghapus data";
-?>
+    echo "Gagal menghapus data";

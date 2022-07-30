@@ -44,12 +44,12 @@ $_SESSION["current_page"] = "Kamar";
                 }
             }
 
-            if ( is_numeric($fasilitas) || strlen($fasilitas) > 20) {
-                $salah .= "Fasilitas tidak boleh berupa angka saja dan tidak lebih dari 20 karakter.<br>";
+            if ( is_numeric($fasilitas)) {
+                $salah .= "Fasilitas tidak boleh berupa angka saja.<br>";
             }
         
-            if ( !is_numeric($harga) || strlen($harga) > 7 ) {
-                $salah .= "Harga harus berupa angka 7 digit.<br>";
+            if ( !is_numeric($harga)) {
+                $salah .= "Harga harus berupa angka.<br>";
             }
             ?>
             <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">

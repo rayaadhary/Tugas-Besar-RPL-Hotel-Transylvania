@@ -67,7 +67,10 @@ $_SESSION["current_page"] = "Pelanggan";
                                                 <th class="dt-center">Nama Pelanggan</th>
                                                 <th class="dt-center">Telepon</th>
                                                 <th class="dt-center">Nama Pengguna</th>
-                                                <th class="dt-center">Aksi</th>
+                                                <?php
+                                                if ($_SESSION["user"] == "Pelanggan")
+                                                    echo "<th class='dt-center'>Aksi</th>";
+                                                ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,16 +83,17 @@ $_SESSION["current_page"] = "Pelanggan";
                                                 <td><?= $row['nama_pelanggan']; ?></td>
                                                 <td class="text-center"><?= $row['telepon']; ?></td>
                                                 <td><?= $row['nama_pengguna'];?></td>
+                                                <?php
+                                                if ($_SESSION["user"] == "Pelanggan") {
+                                                ?>
                                                 <td class="text-center">
-                                                    <!-- a href -->
                                                     <a href="pelanggan-form-edit.php?nik=<?= $row['nik']; ?>" class="btn btn-success btn-circle btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <!-- a href -->
-                                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                    </a>
                                                 </td>
+                                                <?php
+                                                }
+                                                ?>
                                             </tr>
                                                 <?php
                                         }

@@ -29,21 +29,21 @@ $db = dbConnect();
         if (!is_numeric($nik) || strlen($nik) == 0 ||strlen($nik) != 16)
             $salah .= "NIK berupa angka 16 digit dan harus diisi.<br>";
 
-        if (is_numeric($nama) || strlen($nama) > 30)
-            $salah .= "Nama tidak boleh berisi angka dan tidak boleh lebih dari 30 karakter.<br>";
+        if (is_numeric($nama))
+            $salah .= "Nama tidak boleh berisi angka.<br>";
 
-        if (!is_numeric($telp) || strlen($telp) > 13)
-            $salah .= "Telepon harus angka dan tidak boleh lebih dari 13 digit.<br>";
+        if (!is_numeric($telp))
+            $salah .= "Telepon harus berupa angka.<br>";
 
-        if (strlen($pengguna) == 0 || strlen($pengguna) > 10)
-            $salah .= "Nama Pengguna harus harus diisi dan tidak boleh lebih dari 10 karakter.<br>";
+        if (strlen($pengguna) == 0)
+            $salah .= "Nama Pengguna harus diisi.<br>";
 
         $query = $db->query("SELECT * FROM tpelanggan WHERE nama_pengguna = '$pengguna'");
         if ($query->num_rows > 0)
             $salah .= "Nama Pengguna sudah terdaftar.<br>";
             
-        if (strlen($password) == 0 || strlen($password) > 8)
-            $salah .= "Kata Sandi harus harus diisi dan tidak boleh lebih dari 8 karakter.<br>";
+        if (strlen($password) == 0)
+            $salah .= "Kata Sandi harus diisi.<br>";
         ?>
         <div class="position-absolute top-50 start-50 translate-middle">
         <?php
@@ -70,7 +70,7 @@ $db = dbConnect();
                 }
             } else {
                 ?>
-                Data gagal disimpan karena NIK mungkin sudah ada.<br>
+                Data gagal disimpan karena terdapat kesalahan. Silahkan coba lagi.<br>
                 <a href=javascript:history.back(); class="btn btn-dark">Kembali</a>
                 <?php
             }
