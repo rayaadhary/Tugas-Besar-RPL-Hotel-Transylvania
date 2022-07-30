@@ -35,7 +35,7 @@ if (isset($_POST['tblEdit'])) {
 
         if (strlen($password) == 0 || strlen($password) > 8)
             $salah .= "Kata Sandi harus harus diisi dan tidak boleh lebih dari 8 karakter.<br>";
-            
+
         ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
         <?php
