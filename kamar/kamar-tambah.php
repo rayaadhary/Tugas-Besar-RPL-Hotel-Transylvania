@@ -2,7 +2,9 @@
 include_once("../functions.php");
 sessionPetugas();
 $_SESSION["current_page"] = "Kamar";
-
+if ($_SESSION["jabatan"] != "Petugas Administrasi") {
+    header("Location: kamar-view.php?error=5");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,11 +142,11 @@ $_SESSION["current_page"] = "Kamar";
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="Fasilitas">Fasilitas</label>
-                                    <input type="text" name="fasilitas" class="form-control" id="Fasilitas" placeholder="Fasilitas">
+                                    <input type="text" name="fasilitas" class="form-control" id="Fasilitas" placeholder="Fasilitas" maxlength="20">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="Harga">Harga</label>
-                                    <input type="text" name="harga" class="form-control" id="Harga" placeholder="Harga">
+                                    <input type="text" name="harga" class="form-control" id="Harga" placeholder="Harga" maxlength="13">
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <button id="tblTambah" type="submit" class="btn btn-primary mr-3" name="tblTambah">Tambah</button>

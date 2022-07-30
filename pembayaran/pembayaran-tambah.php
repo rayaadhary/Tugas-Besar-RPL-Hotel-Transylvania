@@ -2,6 +2,9 @@
 include_once("../functions.php");
 sessionPetugas();
 $_SESSION["current_page"] = "Pembayaran"; 
+if ($_SESSION["jabatan"] != "Petugas Bagian Keuangan") {
+    header("Location: pembayaran-view.php?error=5");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +28,9 @@ $_SESSION["current_page"] = "Pembayaran";
             // begin validasi
             $salah = "";
             
-            
+            if (!is_numeric($nilaiBayar)) {
+                $salah .= "Nilai bayar harus berupa angka.<br>";
+            }           
             ?>
             <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
             <?php 
@@ -42,7 +47,7 @@ $_SESSION["current_page"] = "Pembayaran";
                             ?>
                             <p class="card-text">Data berhasil ditambahkan.</p>
                             <div class="d-flex justify-content-center">
-                                <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
+                                <a href="pembayaran-view.php" class="btn btn-primary">Lihat Data</a>
                             </div>
                             <?php
                         }
@@ -99,16 +104,16 @@ $_SESSION["current_page"] = "Pembayaran";
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="nilaiBayar">Nilai Bayar</label>
-                                    <input class="form-control" id="nilaiBayar" name="nilaiBayar" placeholder="0">
+                                    <input type="text" class="form-control" id="nilaiBayar" name="nilaiBayar" placeholder="0" maxlength="7">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="Status">Pemesanan</label>
                                     <select class="form-select" id="noPemesanan" name="noPemesanan">
                                         <option value="">Pilih Pemesanan</option>
                                         <?php
-                                            $dataPesan = getList("SELECT * FROM tmemesan ORDER BY no_pemesanan"); 
+                                            $dataPesan = getList("SELECT p.no_pemesanan, t.nama_pelanggan FROM tmemesan p JOIN tpelanggan t ON t.nik = p.nik ORDER BY no_pemesanan"); 
                                             foreach ($dataPesan as $row) {
-                                                echo "<option value=\"" . $row["no_pemesanan"] . "\">" . $row["no_pemesanan"] . "</option>";
+                                                echo "<option value=\"" . $row["no_pemesanan"] . "\">" . $row["no_pemesanan"] . " - " . $row["nama_pelanggan"] . "</option>";
                                             }
                                         ?>
                                     </select>

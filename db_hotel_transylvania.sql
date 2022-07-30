@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2022 at 04:41 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.1
+-- Generation Time: Jul 30, 2022 at 11:06 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,11 +40,12 @@ CREATE TABLE `tkamar` (
 --
 
 INSERT INTO `tkamar` (`no_kamar`, `jenis_kamar`, `status`, `fasilitas`, `harga`) VALUES
-('001', 'Suite', 'Lengkap', 'Kulkas', 3000000),
-('002', 'Double', 'Lengkap', 'Televisi', 200000),
-('003', 'Family', 'Tidak Lengkap', 'Extra bed', 1500000),
-('004', 'Standar', 'Tidak Lengkap', 'Kupon sarapan', 100000),
-('005', 'Single', 'Lengkap', 'Extra bantal', 150000);
+('101', 'Suite', 'Lengkap', 'Kulkas', 3000000),
+('102', 'Double', 'Lengkap', 'Televisi', 200000),
+('103', 'Family', 'Tidak Lengkap', 'Extra bed', 1500000),
+('104', 'Standar', 'Tidak Lengkap', 'Kupon sarapan', 100000),
+('105', 'Single', 'Lengkap', 'Extra bantal', 150000),
+('301', 'Single', 'Lengkap', 'apaaja', 10);
 
 -- --------------------------------------------------------
 
@@ -54,7 +55,7 @@ INSERT INTO `tkamar` (`no_kamar`, `jenis_kamar`, `status`, `fasilitas`, `harga`)
 
 CREATE TABLE `tmemesan` (
   `no_pemesanan` int(5) NOT NULL,
-  `id_petugas` varchar(5) NOT NULL,
+  `id_petugas` varchar(5) DEFAULT NULL,
   `no_kamar` varchar(3) NOT NULL,
   `nik` varchar(16) NOT NULL,
   `banyak_orang` int(2) DEFAULT NULL,
@@ -68,16 +69,18 @@ CREATE TABLE `tmemesan` (
 --
 
 INSERT INTO `tmemesan` (`no_pemesanan`, `id_petugas`, `no_kamar`, `nik`, `banyak_orang`, `lama_inap`, `tgl_check_in`, `tgl_check_out`) VALUES
-(1, 'P0001', '001', '320405873109002', 1, 3, '2022-07-13 19:24:43', '2022-07-16 19:24:52'),
-(5, 'P0001', '002', '317502192819633', 1, 1, '2022-07-16 19:27:03', '2022-07-17 19:27:08'),
-(6, 'P0001', '003', '320621863180920', 4, 4, '2022-07-18 19:32:48', '2022-07-22 19:32:59'),
-(18, 'P0001', '004', '326028918190038', 2, 2, '2022-07-27 19:38:26', '2022-07-29 19:38:31'),
-(19, 'P0001', '005', '320361361838218', 1, 2, '2022-07-04 19:42:03', '2022-07-06 19:42:10'),
-(28, 'P0001', '003', '320361361838218', 2, 1, '2022-07-29 08:34:41', '2022-07-29 08:34:41'),
-(33, 'P0003', '001', '326028918190038', 2, 1, '2022-07-29 08:43:23', '2022-07-29 08:43:23'),
-(35, 'P0004', '002', '317502192819633', 2, 5, '2022-07-15 13:49:00', '2022-07-22 13:49:00'),
-(36, 'P0004', '002', '317502192819633', 2, 5, '2022-07-15 13:49:00', '2022-07-22 13:49:00'),
-(37, 'P0001', '002', '320361361838218', 2, 28, '2022-07-29 14:28:00', '2022-08-26 15:29:00');
+(1, 'P0001', '101', '320405873109002', 1, 3, '2022-07-13 19:24:43', '2022-07-16 19:24:52'),
+(5, 'P0001', '102', '317502192819633', 1, 1, '2022-07-16 19:27:03', '2022-07-17 19:27:08'),
+(6, 'P0001', '103', '320621863180920', 4, 4, '2022-07-18 19:32:48', '2022-07-22 19:32:59'),
+(18, 'P0001', '104', '326028918190038', 2, 2, '2022-07-27 19:38:26', '2022-07-29 19:38:31'),
+(19, 'P0001', '105', '320361361838218', 1, 2, '2022-07-04 19:42:03', '2022-07-06 19:42:10'),
+(28, 'P0001', '103', '320361361838218', 2, 1, '2022-07-29 08:34:41', '2022-07-29 08:34:41'),
+(33, 'P0003', '101', '326028918190038', 2, 1, '2022-07-29 08:43:23', '2022-07-29 08:43:23'),
+(35, 'P0004', '102', '317502192819633', 2, 5, '2022-07-15 13:49:00', '2022-07-22 13:49:00'),
+(36, 'P0004', '102', '317502192819633', 2, 5, '2022-07-15 13:49:00', '2022-07-22 13:49:00'),
+(37, 'P0001', '102', '320361361838218', 2, 28, '2022-07-29 14:28:00', '2022-08-26 15:29:00'),
+(41, 'P0002', '103', '326028918190038', 2, 7, '2022-07-30 14:57:00', '2022-08-06 11:57:00'),
+(42, NULL, '101', '320361361838218', 1, 1, '2022-07-30 16:28:00', '2022-07-31 18:28:00');
 
 -- --------------------------------------------------------
 
@@ -98,8 +101,8 @@ CREATE TABLE `tpelanggan` (
 --
 
 INSERT INTO `tpelanggan` (`nik`, `nama_pelanggan`, `telepon`, `nama_pengguna`, `kata_sandi`) VALUES
-('3147116757167151', 'Eimi Fukada', '6289365625', 'eimi', '11111111'),
 ('317502192819633', 'Oman', '089213789217', 'gemjeeh', 'gataugue'),
+('3175021928196333', 'test ea', '089777856478', 'test ea', 'hayuq'),
 ('320361361838218', 'Jalis', '081361736179', 'jaleez', 'apaiyah1'),
 ('320405873109002', 'Winda ', '085167834521', 'windasmr', 'haisay15'),
 ('320621863180920', 'Irvin ', '087381786310', 'irveen', 'rotikeju'),
@@ -152,11 +155,12 @@ CREATE TABLE `tpetugas` (
 --
 
 INSERT INTO `tpetugas` (`id_petugas`, `nama_petugas`, `jabatan`, `nama_pengguna`, `kata_sandi`, `no_lantai`, `pelayanan`, `tugas_keuangan`, `tugas_administrasi`) VALUES
-('P0001', 'Kobo Kanaeru', 'Petugas Administrasi', 'kobotempes', 'ehe123', NULL, NULL, NULL, 'Mengelola Laporan'),
-('P0002', 'Vestia Zeta', 'Petugas Bagian Keuangan', 'zeta', 'tevos', NULL, NULL, 'Memvalidasi Pembayar', NULL),
-('P0003', 'Kureiji Ollie', 'Petugas Resepsionis', 'pekopeko', 'matamu', NULL, 'Mencatat Pemesanan', NULL, NULL),
-('P0004', 'Moona Hoshinova', 'Pramukamar', 'moona', 'eheeq', '4', NULL, NULL, NULL),
-('P0020', 'Sunda', 'Pramukamar', '', '', '2', NULL, NULL, NULL);
+('P0001', 'David John', 'Petugas Administrasi', 'rogers63', 'rog6633', NULL, NULL, NULL, 'Mengelola Laporan'),
+('P0002', 'Roger Paul', 'Petugas Bagian Keuangan', 'mike28', 'mik2288', NULL, NULL, 'Validasi Pembayaran', NULL),
+('P0003', 'Maria Sanders', 'Petugas Resepsionis', 'rivera92', 'riv9922', NULL, 'Mencatat Pemesanan', NULL, NULL),
+('P0004', 'Morris Miller', 'Pramukamar', 'morris85', 'mor8855', '4', NULL, NULL, NULL),
+('P0020', 'Daniel Michaela', 'Petugas Administrasi', 'daniel78', 'dan7788', '2', NULL, NULL, NULL),
+('P0088', 'irvinnnn', 'Pramukamar', 'irvinw', 'irvinw', '3', '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -204,7 +208,7 @@ ALTER TABLE `tpetugas`
 -- AUTO_INCREMENT for table `tmemesan`
 --
 ALTER TABLE `tmemesan`
-  MODIFY `no_pemesanan` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `no_pemesanan` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `tpembayaran`
@@ -220,8 +224,8 @@ ALTER TABLE `tpembayaran`
 -- Constraints for table `tmemesan`
 --
 ALTER TABLE `tmemesan`
-  ADD CONSTRAINT `tmemesan_ibfk_1` FOREIGN KEY (`nik`) REFERENCES `tpelanggan` (`nik`),
-  ADD CONSTRAINT `tmemesan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `tkamar` (`no_kamar`),
+  ADD CONSTRAINT `tmemesan_ibfk_1` FOREIGN KEY (`nik`) REFERENCES `tpelanggan` (`nik`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `tmemesan_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `tkamar` (`no_kamar`) ON UPDATE CASCADE,
   ADD CONSTRAINT `tmemesan_ibfk_3` FOREIGN KEY (`id_petugas`) REFERENCES `tpetugas` (`id_petugas`);
 
 --

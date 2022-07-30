@@ -2,6 +2,9 @@
 include_once("../functions.php");
 sessionPetugas();
 $_SESSION["current_page"] = "Kamar";
+if ($_SESSION["jabatan"] != "Petugas Administrasi" && $_SESSION["jabatan"] != "Pramukamar") {
+    header("Location: kamar-view.php?error=5");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,12 +30,12 @@ $_SESSION["current_page"] = "Kamar";
         // begin validasi
         $salah = "";
     
-        if ( is_numeric($fasilitas) || strlen($fasilitas) > 20) {
-            $salah .= "Fasilitas tidak boleh berupa angka saja dan tidak lebih dari 20 karakter.<br>";
+        if ( is_numeric($fasilitas)) {
+            $salah .= "Fasilitas tidak boleh berupa angka saja.<br>";
         }
     
-        if ( !is_numeric($harga) || strlen($harga) > 7 ) {
-            $salah .= "Harga harus berupa angka 7 digit.<br>";
+        if ( !is_numeric($harga)) {
+            $salah .= "Harga harus berupa angka.<br>";
         }
         ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
@@ -102,8 +105,8 @@ $_SESSION["current_page"] = "Kamar";
                 <!-- Date & Time -->
                 <div class="mt-4 pb-4">
                     <h6 class="mt-4">
-                    <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
-                </h6>    
+                        <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
+                    </h6>    
                 </div>
                 <div class="row">
                     <div class="col-6 ps-4">
@@ -117,7 +120,7 @@ $_SESSION["current_page"] = "Kamar";
                         <form method="POST" action="">
                             <div class="form-group mb-3">
                                 <label for="NoKamar">No Kamar</label>
-                                <input type="text" class="form-control" id="NoKamar" placeholder="No Kamar" value="<?= $edit["no_kamar"]; ?>" readonly>
+                                <input type="text" class="form-control" id="NoKamar" name="noKamar" placeholder="No Kamar" value="<?= $edit["no_kamar"]; ?>" readonly>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Jenis Kamar</label>
@@ -151,11 +154,11 @@ $_SESSION["current_page"] = "Kamar";
                             </div>
                             <div class="form-group mb-3">
                                 <label for="Fasilitas">Fasilitas</label>
-                                <input type="text" class="form-control" id="Fasilitas" placeholder="Fasilitas" value="<?= $edit["fasilitas"]; ?>">
+                                <input type="text" class="form-control" id="Fasilitas" name="fasilitas" placeholder="Fasilitas" value="<?= $edit["fasilitas"]; ?>" maxlength="20">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="Harga">Harga</label>
-                                <input type="text" class="form-control" id="Harga" placeholder="Harga" value="<?= $edit["harga"]; ?>">
+                                <input type="text" class="form-control" id="Harga" name="harga" placeholder="Harga" value="<?= $edit["harga"]; ?>" maxlength="13">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="submit" class="btn btn-primary mr-3" name="tblEdit">Ubah</button>

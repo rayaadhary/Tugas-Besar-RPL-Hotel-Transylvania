@@ -51,7 +51,7 @@
 								</div>
                                 <div class="mb-3 text-start">
                                     <label for="telp" class="form-label">No Telepon</label>
-                                    <input type="number" class="form-control" id="telp" name="telp" placeholder="Masukkan No Telp" maxlength="13" required>
+                                    <input type="text" class="form-control" id="telp" name="telp" placeholder="Masukkan No Telp" maxlength="13" required>
                                 <div class="invalid-feedback">
 									Harap isi No Telp
 								</div>

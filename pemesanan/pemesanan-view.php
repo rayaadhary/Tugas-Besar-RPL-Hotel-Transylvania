@@ -30,6 +30,23 @@ $_SESSION["current_page"] = "Pemesanan";
             </nav>
             <!-- Page content-->
             <div class="container-fluid">
+                <?php
+                if (isset($_GET["error"])) {
+                    $error = $_GET["error"];
+                    if ($error == 1)
+                        showError("Nama Pengguna dan Kata Sandi tidak sesuai.");
+                    else if ($error == 2)
+                        showError("Error database. Silahkan hubungi administrator");
+                    else if ($error == 3)
+                        showError("Koneksi ke Database gagal. Autentikasi gagal.");
+                    else if ($error == 4)
+                        showError("Anda tidak boleh mengakses halaman sebelumnya karena belum login. Silahkan login terlebih dahulu.");
+                    else if ($error == 5)
+                        showError("Anda tidak memiliki hak untuk mengakses halaman sebelumnya");
+                    else
+                        showError("Unknown Error.");
+                }
+                ?>
                 <h6 class="mt-4">
                     <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
                 </h6>
@@ -45,7 +62,7 @@ $_SESSION["current_page"] = "Pemesanan";
                             $sql = "SELECT m.no_pemesanan, p.nama_petugas, k.no_kamar, k.jenis_kamar, pe.nama_pelanggan, 
                                     m.banyak_orang, m.lama_inap, m.tgl_check_out, m.tgl_check_in
                                     FROM tmemesan m
-                                    JOIN tpetugas p ON m.id_petugas = p.id_petugas
+                                    LEFT JOIN tpetugas p ON m.id_petugas = p.id_petugas
                                     JOIN tkamar k ON m.no_kamar = k.no_kamar
                                     JOIN tpelanggan pe ON m.nik = pe.nik
                                     ";
@@ -67,6 +84,11 @@ $_SESSION["current_page"] = "Pemesanan";
                                                 <th class="dt-center">Tanggal <i>Check-in</i></th>
                                                 <th class="dt-center">Tanggal <i>Check-out</i></th>
                                                 <th class="dt-center">Nama Petugas</th>
+                                                <?php 
+                                                if ($_SESSION["user"] == "Petugas" && $_SESSION["jabatan"] == "Petugas Resepsionis") {
+                                                    echo "<th class='dt-center'>Aksi</th>";
+                                                }
+                                                ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -85,6 +107,17 @@ $_SESSION["current_page"] = "Pemesanan";
                                                     <td class="text-center"><?= $row['tgl_check_in']; ?></td>
                                                     <td class="text-center"><?= $row['tgl_check_out']; ?></td>
                                                     <td><?= $row['nama_petugas']; ?></td>
+                                                    <?php
+                                                    if ($_SESSION["user"] == "Petugas" && $_SESSION["jabatan"] == "Petugas Resepsionis") {
+                                                        ?>
+                                                        <td class="text-center">
+                                                            <a href="pemesanan-edit.php?no_pemesanan=<?= $row['no_pemesanan'] ?>" class="btn btn-success btn-circle btn-sm">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </tr>
                                             <?php
                                             }

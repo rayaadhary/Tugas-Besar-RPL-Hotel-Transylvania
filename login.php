@@ -13,6 +13,7 @@ if (isset($_POST["btn_login"])) {
     if ($row -> num_rows > 0) {
         if ($kata_sandi == $data['kata_sandi']) {
             $_SESSION['nama_pengguna'] = $data['nama_pengguna'];
+            $_SESSION['jabatan'] = $data['jabatan'];
             $_SESSION['user'] = "Petugas";
             header('Location: pemesanan/pemesanan-view.php');
         } else {
@@ -25,6 +26,8 @@ if (isset($_POST["btn_login"])) {
         if ($row2 -> num_rows > 0) {
             if ($kata_sandi == $data2['kata_sandi']) {
                 $_SESSION['nama_pengguna'] = $data2['nama_pengguna'];
+                $_SESSION['nama_pelanggan'] = $data2['nama_pelanggan'];
+                $_SESSION['nik'] = $data2['nik'];
                 $_SESSION['user'] = "Pelanggan";
                 header('Location: kamar/kamar-view.php');
             } else {

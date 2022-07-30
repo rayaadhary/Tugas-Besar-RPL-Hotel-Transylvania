@@ -1,8 +1,10 @@
 <?php
 include_once("../functions.php");
-sessionPelanggan();
+session_start();
+if (isset($_SESSION["jabatan"])){
+    header("Location: pemesanan-view.php?error=5");
+}
 $_SESSION["current_page"] = "Pemesanan";
-// session login petugas/pelanggan
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +31,7 @@ $_SESSION["current_page"] = "Pemesanan";
         $waktuCheckout = $_POST["waktuCheckout"];
         $checkout = $db->escape_string($tglCheckout . " " . $waktuCheckout);
         $noKamar = $db->escape_string($_POST["noKamar"]);
-        $idPetugas = $db->escape_string($_POST["idPetugas"]);
+        // $idPetugas = $db->escape_string($_POST["idPetugas"]);
         $banyakOrang = $db->escape_string($_POST["banyakOrang"]);
 
         $earlier = new DateTime($tglCheckin);
@@ -41,8 +43,10 @@ $_SESSION["current_page"] = "Pemesanan";
 
         if ($tglCheckin >= date("Y-m-d")) {
             if ($tglCheckin <= $tglCheckout) {
-                if ($waktuCheckin > $waktuCheckout) {
-                    $salah .= "Waktu check-in tidak boleh melebihi/melewati waktu check-out.<br>";
+                if ($tglCheckin == $tglCheckout) {
+                    if ($waktuCheckin > $waktuCheckout) {
+                        $salah .= "Waktu check-in tidak boleh melebihi/melewati waktu check-out.<br>";
+                    }
                 }
             } else { // tgl checkin melewati atau lebih dari tanggal checkout
                 $salah .= "Tanggal check-in tidak boleh melebihi/melewati tanggal check-out.<br>";
@@ -51,17 +55,13 @@ $_SESSION["current_page"] = "Pemesanan";
             $salah .= "Tanggal check-in tidak boleh sebelum tanggal hari ini.<br>";
         }
 
-        if ($nik == "") {
-            $salah .= "Nama pemesan harus dipilih.<br>";
-        }
-
         if ($noKamar == "") {
             $salah .= "Kamar harus dipilih.<br>";
         }
 
-        if ($idPetugas == "") {
-            $salah .= "Petugas harus dipilih.<br>";
-        }
+        // if ($idPetugas == "") {
+        //     $salah .= "Petugas harus dipilih.<br>";
+        // }
 
     ?>
         <div id="alertBox" class="card shadow-lg bg-light text-center" style="width: 30rem;">
@@ -72,8 +72,8 @@ $_SESSION["current_page"] = "Pemesanan";
                 <h3 class="card-text">Penyimpanan Data Pemesanan</h3>
                 <p class="card-text">Semua data valid.</p>
                 <?php
-                $query = "INSERT INTO tmemesan(id_petugas, no_kamar, nik, banyak_orang, lama_inap, tgl_check_in, tgl_check_out) 
-                            VALUES ('$idPetugas', '$noKamar', '$nik', $banyakOrang, $abs_diff, '$checkin', '$checkout')
+                $query = "INSERT INTO tmemesan(no_kamar, nik, banyak_orang, lama_inap, tgl_check_in, tgl_check_out) 
+                            VALUES ('$noKamar', '$nik', $banyakOrang, $abs_diff, '$checkin', '$checkout')
                         ";
                 $result = $db->query($query);
                 if ($result) {
@@ -81,7 +81,7 @@ $_SESSION["current_page"] = "Pemesanan";
                 ?>
                         <p class="card-text">Data berhasil ditambahkan.</p>
                         <div class="d-flex justify-content-center">
-                            <a href="pemesanan-view.php" class="btn btn-primary">Lihat Data</a>
+                            <a href="kamar-view.php" class="btn btn-primary">Lihat Data</a>
                         </div>
                     <?php
                     }
@@ -91,7 +91,7 @@ $_SESSION["current_page"] = "Pemesanan";
                     <div class="d-flex justify-content-center">
                         <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
                     </div>
-                <?php
+                    <?php
                     echo "Errornya : " . $db->error;
                 }
             } else {
@@ -122,34 +122,23 @@ $_SESSION["current_page"] = "Pemesanan";
             </nav>
             <!-- Page content-->
             <div class="container-fluid">
-                <h1>Tambah Data</h1>
+                <h3>Tambah Data</h3>
                 <h6 class="mt-4">
                     <span id="Day"></span>, <span id="Date"></span> - <span id="Time"></span> WIB
                 </h6>
                 <form method="POST" action="">
-                    <!-- Auto Input -->
-                    <!-- <input type="hidden" class="form-control" id="NoPemesanan" name="noPemesanan" placeholder="Nomor Pemesanan" readonly> -->
-                    <!-- <label for="NoPemesanan">Nomor Pemesanan</label> -->
 
                     <!-- Baris 1 -->
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="form-floating m-2">
-                                <select class="form-select" id="NIK" name="nik">
-                                    <option value="">--Pilih Pemesan--</option>
-                                    <?php
-                                    $data = getList("SELECT * FROM tpelanggan ORDER BY nama_pelanggan");
-                                    foreach ($data as $row) {
-                                        echo "<option value=\"" . $row["nik"] . "\">" . $row["nama_pelanggan"] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <label for="NIK">Nama Pemesan</label>
+                                <input type="text" class="form-control" id="NIK" name="nik" placeholder="Banyak Orang" value="<?= $_SESSION["nik"]?>" readonly>
+                                <label for="NIK">NIK Pemesan</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating m-2">
-                                <input type="text" class="form-control" id="BanyakOrang" name="banyakOrang" placeholder="Banyak Orang">
+                                <input type="text" class="form-control" id="BanyakOrang" name="banyakOrang" placeholder="Banyak Orang" maxlength="2">
                                 <label for="BanyakOrang">Banyak Orang</label>
                             </div>
                         </div>
@@ -205,23 +194,6 @@ $_SESSION["current_page"] = "Pemesanan";
                                     ?>
                                 </select>
                                 <label for="Kamar">Nomor dan Jenis Kamar</label>
-                            </div>
-                        </div>
-                        <!-- Baris 4 Kolom 2 -->
-                        <!-- if petugas yg login, tampilkan pilihan petugas -->
-                        <!-- else jangan ditampilkan -->
-                        <div class="col-md-4">
-                            <div class="form-floating m-2">
-                                <select class="form-select" id="IdPetugas" name="idPetugas">
-                                    <option value="">--Pilih Petugas--</option>
-                                    <?php
-                                    $data = getList("SELECT * FROM tpetugas ORDER BY nama_petugas");
-                                    foreach ($data as $row) {
-                                        echo "<option value=\"" . $row["id_petugas"] . "\">" . $row["nama_petugas"] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <label for="IdPetugas">Nama Petugas</label>
                             </div>
                         </div>
                     </div>

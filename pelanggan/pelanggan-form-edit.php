@@ -1,7 +1,11 @@
 <?php 
 include_once("../functions.php");
-session();
+session_start();
+if (isset($_SESSION["jabatan"])){
+    header("Location: pelanggan-view.php?error=5");
+}
 $_SESSION["current_page"] = "Pelanggan";
+
 if (isset($_POST['tblEdit'])) {
     if ($db->connect_errno == 0) {
         $nik = $db->escape_string($_POST['nik']);
@@ -129,23 +133,23 @@ if (isset($_POST['tblEdit'])) {
                                     <form method="POST" action="">
                                         <div class="form-group mb-3">
                                             <label for="nik">NIK</label>
-                                            <input type="text" class="form-control" id="nik" name="nik" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx" value="<?= $edit["nik"]; ?>" readonly>
+                                            <input type="text" class="form-control" id="nik" name="nik" maxlength="16" placeholder="Format NIK 16 digit angka. Contoh 31xxxxxxxxxxxxxx" value="<?= $edit["nik"]; ?>" readonly>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan" value="<?= $edit["nama_pelanggan"]; ?>">
+                                            <input type="text" class="form-control" id="nama" name="nama" maxlength="30" placeholder="Nama Pelanggan" value="<?= $edit["nama_pelanggan"]; ?>">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="telp">No Telepon</label>
-                                            <input type="text" class="form-control" id="telp" name="telp" placeholder="Format No Telp 08xxx atau 628xxxx" value="<?= $edit["telepon"]; ?>">
+                                            <input type="text" class="form-control" id="telp" name="telp"  maxlength="13"placeholder="Format No Telp 08xxx atau 628xxxx" value="<?= $edit["telepon"]; ?>">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="pengguna">Nama Pengguna</label>
-                                            <input type="text" class="form-control" id="pengguna" name="pengguna" placeholder="Nama Pengguna" value="<?= $edit["nama_pengguna"]; ?>">
+                                            <input type="text" class="form-control" id="pengguna" name="pengguna" maxlength="10" placeholder="Nama Pengguna" value="<?= $edit["nama_pengguna"]; ?>">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="katasandi">Kata Sandi</label>
-                                            <input type="password" class="form-control" id="katasandi" name="katasandi" placeholder="Kata Sandi" value="<?= $edit["kata_sandi"]; ?>">
+                                            <input type="password" class="form-control" id="katasandi" name="katasandi" maxlength="8" placeholder="Kata Sandi" value="<?= $edit["kata_sandi"]; ?>">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <a href=javascript:history.back(); class="p-3">
